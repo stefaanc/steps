@@ -15,9 +15,9 @@
 > - You can easily redirect the error output to a log-file.
 >
 >
-> Have you ever redirected the standard output of your script to a log-file, but wanted a way to write some summary info to your terminal?
-> Have you ever redirected the error output of your script to a log-file, but still wanted to see an indication of these errors on your terminal?
-> Have you ever had trouble distinguishing between output from the main script and the output from a nested script?
+> Have you ever redirected the standard output of your script to a log-file, but wanted a way to write some summary info to your terminal?  
+> Have you ever redirected the error output of your script to a log-file, but still wanted to see an indication of these errors on your terminal?  
+> Have you ever had trouble distinguishing between output from the main script and the output from a nested script?  
 > Have you ever wished for code that handles output in different shells in a more similar way?
 >
 >- **STEPS will help you with this.**
@@ -35,10 +35,10 @@
 > - You can also use more advanced trapping techniques for exits (bash: `trap EXIT`)
 >
 >
-> Have you ever found you program full of boiler-plate code to handle exit-codes, execution-statuses and exceptions?
-> Have you ever had trouble with your error-handling code when scripts are called by other scripts?
-> Have you ever found it difficult to implement and maintain consistent error behaviour and output for all these different techniques?
-> Are you sure you are exiting all your scripts with all the right exit conditions, everywhere in your code?
+> Have you ever found you program full of boiler-plate code to handle exit-codes, execution-statuses and exceptions?  
+> Have you ever had trouble with your error-handling code when scripts are called by other scripts?  
+> Have you ever found it difficult to implement and maintain consistent error behaviour and output for all these different techniques?  
+> Are you sure you are exiting all your scripts with all the right exit conditions, everywhere in your code?  
 > Have you ever wished for code that handles errors in different shells in a more similar way?
 >
 > - **STEPS will help you with this.**
@@ -46,7 +46,7 @@
 >
 > and finally...
 > 
-> Are you having trouble finding out about all these different techniques for different shells, trawling through 10s or perhaps even 100s of web-pages?
+> Are you having trouble finding out about all these different techniques for different shells, trawling through 10s or perhaps even 100s of web-pages?  
 > Have you given up <del>wasting</del> spending all this time finding and understanding all of these techniques that are often minimally documented?
 >
 > - **STEPS will help you with this.**

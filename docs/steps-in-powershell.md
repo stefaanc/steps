@@ -409,7 +409,7 @@ Write-Output "doing something else"
 - `$STEPS_LOG_APPEND = "true"` appends the output to the log-file.
 
   > :bulb:  
-  > Use a value "$null", "" or "false" to override `$env:STEPS_LOG_APPEND = "true"`
+  > Use a value `"$null"`, `""` or `"false"` to override `$env:STEPS_LOG_APPEND = "true"`
 
 When running the script, the log-file will look something like
 
