@@ -1,7 +1,7 @@
 # STEPS
----
 
-**A small library** 
+**a small library** 
+
 - **to redirect the output of commands in your shell scripts to a log-file, while writing your own information to the terminal.**
 - **to handle errors and exits in a concise and consistent manner**
 - **with similar behaviour in different shells.**
@@ -63,15 +63,17 @@
 > - **STEPS will help you with this.**
 
 
+
 <br/>
+
 ## Getting Started With STEPS In Powershell
 
 Let's start with copying the STEPS library into our current directory.  You can find it on github in the STEPS project: `/scripts/.steps.ps1`
 
-#### A Script
+### A Basic Script
 
 Write a basic powershell script that uses STEPS
-```powershell
+```powershell {.line-numbers}
 #
 # Intro-1.ps1
 #
@@ -119,7 +121,7 @@ When running the script, our terminal will now look something like
 
 And the log-file will look something like
 
-```text
+```text {.line-numbers}
 
 #
 # ======================================================
@@ -163,41 +165,42 @@ To debug, comment out the `trap ( do_trap }` line in your script.  Be aware that
 
 ![intro-1.trouble-2.png](./docs/screenshots/intro-1.trouble-2.png)
 
-#### Other Features
-
-###### Generating an error
-
-![intro-1.failed.png](./docs/screenshots/intro-1.failed.png)
-
-###### Catching exits
-
-![intro-1.catch.png](./docs/screenshots/intro-1.catch.png)
-
-###### Providing more information
-
-![intro-1.information.png](./docs/screenshots/intro-1.information.png)
-
-###### Nested Scripts
-
-![intro-1.nested.png](./docs/screenshots/intro-1.nested.png)
-
-###### Changing Colors
-
-![intro-1.colors.png](./screenshots/intro-1.colors.png)
-
-###### ...and more
+### Other Features
 
 For a more complete discussion, [click here](./docs/steps-in-powershell)
 
+#### Generating an error
+
+![intro-1.failed.png](./docs/screenshots/intro-1.failed.png)
+
+#### Catching exits
+
+![intro-1.catch.png](./docs/screenshots/intro-1.catch.png)
+
+#### Providing more information
+
+![intro-1.information.png](./docs/screenshots/intro-1.information.png)
+
+#### Nested Scripts
+
+![intro-1.nested.png](./docs/screenshots/intro-1.nested.png)
+
+#### Changing Colors
+
+![intro-1.colors.png](./docs/screenshots/intro-1.colors.png)
+
+#### ... and more
+
+
 ## Calling A Script From Packer
 
-> :warning:
+> :warning: 
 > The following assumes you have [packer](https://www.packer.io) installed on your machine.
 
 Let's re-use our basic powershell script.
 Since packer will be setting environment variables, we can drop the `$STEPS_LOG_FILE = ` line from the script.
 
-```powershell
+```powershell {.line-numbers}
 #
 # Intro-1.ps1
 #
@@ -210,7 +213,7 @@ trap { do_trap }
 
 Now we create a packer JSON file with a provisioner of type `"shell-local"`
 
-```json
+```javascript {.line-numbers}
 {
     "builders": [
         {
@@ -248,7 +251,7 @@ Or when we generate an error
 
 ![intro-1.packer.failed.png](./docs/screenshots/intro-1.packer.failed.png)
 
-> :bulb:
+> :bulb: 
 > We can also do this for packer post-processors
 
 <br>
