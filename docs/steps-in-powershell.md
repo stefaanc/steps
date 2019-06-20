@@ -2,7 +2,7 @@
 
 Let's start with copying the STEPS library into our current directory.  You can find it on github in the STEPS project: `/scripts/.steps.ps1`
 
-#### A Successful Script
+### A Successful Script
 
 Write a basic powershell script that uses STEPS
 ```powershell
@@ -43,7 +43,7 @@ do_exit 0
 - `do_exit 0` writes a script-footer to both log-file and terminal
 - all other output from the script is only sent to the log-file
 
-  > :bulb: 
+  > :bulb:  
   > you can also use an environment `$env:STEPS_LOG_FILE` to set the log-file
   > or perhaps you prefer a parameter in your script `param( $STEPS_LOG_FILE = $env:STEPS_LOG_FILE )`
 
@@ -86,7 +86,7 @@ doing final thing
 # ==============================
 ```
 
-#### Generating An Error
+### Generating An Error
 
 Let's modify the script to throw an error
 
@@ -106,7 +106,7 @@ throw "my-error"
 
 - `throw "my-error"` throws a terminating error
 
-  > :bulb:
+  > :bulb:  
   > STEPS is setting `$ErrorActionPreference = 'Stop'` to catch non-terminating errors from for instance `Write-Error "my-error"`.  If you prefer, you can reset this after you dot-sourced the library, to some other value like `'Continue'`, `'SilentlyContinue'` or `'Ignore'`.
   > Also, most powershell methods allow you to override this for a single command using an option, for instance `-ErrorAction 'Continue'`
 
@@ -151,7 +151,7 @@ At C:\Users\stefaanc\steps\playground\intro-1.ps1:19 char:1
     + FullyQualifiedErrorId : my-error
 ```
 
-#### Catching Exits
+### Catching Exits
 
 Let's modify the script to simulate a command that doesn't throw errors but instead exits with an exitcode, and then catch that exitcode.
 
@@ -205,7 +205,7 @@ doing something
 #
 ```
 
-#### Providing More Information
+### Providing More Information
 
 Let's modify the script to provide more information to the terminal.
 
@@ -270,7 +270,7 @@ doing final thing
 
 ```
 
-#### Nesting Scripts
+### Nesting Scripts
 
 To illustrate nested scripts, copy "intro-1.ps1" to "intro-2.ps1".  Then modify "intro-1.ps1" to make a call to "intro-2.ps1", and drop the `$STEPS_LOG_FILE` setting from "intro-2.ps1"
 
@@ -385,7 +385,7 @@ doing final thing
 # ==============================
 ```
 
-#### Appending To A Log-file
+### Appending To A Log-file
 
 Let's change back to our original "Intro-1.ps1" script, and add an option to append to the log-file.
 
@@ -408,7 +408,7 @@ Write-Output "doing something else"
 
 - `$STEPS_LOG_APPEND = "true"` appends the output to the log-file.
 
-  > :bulb:
+  > :bulb:  
   > Use a value "$null", "" or "false" to override `$env:STEPS_LOG_APPEND = "true"`
 
 When running the script, the log-file will look something like
@@ -509,7 +509,7 @@ doing final thing
 
 - remark that the first part of the log-file is from our previous test
 
-#### Changing Colors
+### Changing Colors
 
 You can change the colors using another variable in the script or environment.
 
@@ -532,7 +532,7 @@ trap { do_trap }
 - `$e = [char]27` gives us the ASCII code 27 for "escape".
 - `$STEPS_COLORS = "$e[...` defines the "normal", "green", "yellow", "red" and "reset" color-codes in a comma separated list without spaces.  In the example, we changed the "normal" color from the default code for powershell (`$e[38;5;45m`) to the code we typically use as for bash (`$e[38;5;246m`).
 
-  > :bulb:
+  > :bulb:  
   > For a good overview of the ANSI/VT100 color-codes, [click here](https://misc.flogisoft.com/bash/tip_colors_and_formatting)
 
 When running the script, our terminal will now look something like

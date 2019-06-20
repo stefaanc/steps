@@ -111,7 +111,7 @@ do_exit 0
 - `do_exit 0` writes a script-footer to both log-file and terminal
 - all other output from the script is only sent to the log-file
 
-  > :bulb: 
+  > :bulb:  
   > you can also use an environment `$env:STEPS_LOG_FILE` to set the log-file
   > or perhaps you prefer a parameter in your script `param( $STEPS_LOG_FILE = $env:STEPS_LOG_FILE )`
 
@@ -121,7 +121,7 @@ When running the script, our terminal will now look something like
 
 And the log-file will look something like
 
-```text {.line-numbers}
+```text
 
 #
 # ======================================================
@@ -167,7 +167,7 @@ To debug, comment out the `trap ( do_trap }` line in your script.  Be aware that
 
 ### Other Features
 
-For a more complete discussion, [click here](./docs/steps-in-powershell)
+For a more complete discussion, [click here](./docs/steps-in-powershell.md)
 
 #### Generating an error
 
@@ -191,10 +191,11 @@ For a more complete discussion, [click here](./docs/steps-in-powershell)
 
 #### ... and more
 
+<br/>
 
 ## Calling A Script From Packer
 
-> :warning: 
+> :warning:  
 > The following assumes you have [packer](https://www.packer.io) installed on your machine.
 
 Let's re-use our basic powershell script.
@@ -251,7 +252,7 @@ Or when we generate an error
 
 ![intro-1.packer.failed.png](./docs/screenshots/intro-1.packer.failed.png)
 
-> :bulb: 
+> :bulb:  
 > We can also do this for packer post-processors
 
 <br>
