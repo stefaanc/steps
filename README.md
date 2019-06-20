@@ -121,7 +121,7 @@ When running the script, our terminal will now look something like
 
 And the log-file will look something like
 
-```text {.line-numbers}
+```text
 
 #
 # ======================================================
@@ -167,7 +167,7 @@ To debug, comment out the `trap ( do_trap }` line in your script.  Be aware that
 
 ### Other Features
 
-For a more complete discussion, [click here](./docs/steps-in-powershell)
+For a more complete discussion, [click here](./docs/steps-in-powershell.md)
 
 #### Generating an error
 
@@ -191,6 +191,7 @@ For a more complete discussion, [click here](./docs/steps-in-powershell)
 
 #### ... and more
 
+<br/>
 
 ## Calling A Script From Packer
 
