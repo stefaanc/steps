@@ -57,7 +57,7 @@
 
 > and a very last one...
 >
-> Are you curious about some of the solutions we learned to solve the above problems?  
+> Are you curious about some of the solutions we found to solve the above problems?  
 > Do you want to learn how to do something similar yourself?
 >
 > - **STEPS will help you with this.**
