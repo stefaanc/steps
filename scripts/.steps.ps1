@@ -82,7 +82,13 @@ function do_exec {   # called from 1st 'do_script'
     #Set-Alias 'exit' 'do_exit'                                                 # !!! NEEDS WORK !!!
 
     #
-    # restart script with proper settings and redirection
+    # clear $LASTEXITCODE
+    #
+
+    cmd /c "exit 0"
+
+    #
+    # restart script with proper redirection
     #
 
     try {
@@ -103,7 +109,7 @@ function do_exec {   # called from 1st 'do_script'
     }
 
     # Write-Host "${N}##### do_exec - break${X}"   # for debugging
-    break
+    exit 0
 }
 
 function do_script {
@@ -150,8 +156,6 @@ function do_script {
         }
         Write-Output "#"
         Write-Output ""
-
-        PowerShell -NoProfile "exit 0"   # reset correct $LASTEXITCODE
     }
 }
 
