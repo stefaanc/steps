@@ -1,3 +1,6 @@
+# Copyright (c) 2019 Stefaan Coussement
+# MIT License
+
 #[Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSAvoidGlobalVars')]       # !!! NEEDS WORK !!!
 #[Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSAvoidUsingWriteHost')]   # !!! NEEDS WORK !!!
 
