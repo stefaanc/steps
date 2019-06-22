@@ -11,7 +11,7 @@ Write a basic powershell script that uses STEPS
 #
 $STEPS_LOG_FILE = ".\intro-1.log"
 
-. .steps.ps1
+. ./.steps.ps1
 trap { do_trap }
 
 do_script
@@ -36,7 +36,7 @@ do_exit 0
 ```
 
 - `$STEPS_LOG_FILE` is setting the log-file STEPS will use
-- `. .steps.ps1` dot-sources / includes / imports the STEPS library into our script
+- `. ./.steps.ps1` dot-sources / includes / imports the STEPS library into our script
 - `trap { do_trap }` sets up a mechanism to catch the errors thrown in our script or in the STEPS library
 - `do_script` initializes the STEPS library and writes a script-header to both log-file and terminal
 - `do_step` writes a step-header to both log-file and terminal
@@ -280,7 +280,7 @@ To illustrate nested scripts, copy "intro-1.ps1" to "intro-2.ps1".  Then modify 
 #
 $STEPS_LOG_FILE = ".\intro-1.log"
 
-. .steps.ps1
+. ./.steps.ps1
 trap { do_trap }
 
 #...
@@ -298,7 +298,7 @@ do_step "do something else"
 # Intro-2.ps1
 #
 
-. .steps.ps1
+. ./.steps.ps1
 trap { do_trap }
 
 #...
@@ -523,7 +523,7 @@ $e = [char]27
 $STEPS_COLORS = "$e[38;5;246m,$e[92m,$e[93m,$e[91m,$e[0m"
 #                normal     ,green ,yellow,red   ,reset
 
-. .steps.ps1
+. ./.steps.ps1
 trap { do_trap }
 
 #...
