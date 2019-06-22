@@ -1,5 +1,5 @@
 #
-# more info: https://github...                                                  # !!! TO ADD !!!
+# more info: https://github.com/stefaanc/steps
 #
 param (
     $LOG_FILE = $env:LOG_FILE,          # for '.steps.ps1'

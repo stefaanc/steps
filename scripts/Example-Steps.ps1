@@ -1,5 +1,5 @@
 #
-# more info: https://github...                                                  # !!! TO ADD !!!
+# more info: https://github.com/stefaanc/steps
 #
 #
 # using environment vars
