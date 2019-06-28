@@ -95,10 +95,10 @@ Copy the STEPS library into your scripts directory.  You can find it on github i
 ### Advanced Topics
 
 **TBD** [**Scripts with parameters**]()  
-**TBD** [Native commands that write status-info to stderr]()  
-**TBD** [Native commands that use exitcode for status-info]()  
-[Appending to a log-file](./docs/powershell/appending-to-a-log-file.md)  
-[Changing colors](./docs/powershell/changing-colors.md)
+**TBD** [**Native commands that write status-info to stderr**]()  
+**TBD** [**Native commands that use exitcode for status-info**]()  
+[**Appending to a log-file**](./docs/powershell/appending-to-a-log-file.md)  
+[**Changing colors**](./docs/powershell/changing-colors.md)
 
 ### Troubleshooting
 
