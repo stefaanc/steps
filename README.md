@@ -68,198 +68,72 @@
 
 ## Getting Started With STEPS In Powershell
 
-Let's start with copying the STEPS library into our current directory.  You can find it on github in the STEPS project: `/scripts/.steps.ps1`
+Copy the STEPS library into your scripts directory.  You can find it on github in the STEPS project: `/scripts/.steps.ps1`
 
-### A Basic Script
+### The Basics
 
-Write a basic powershell script that uses STEPS
-```powershell {.line-numbers}
-#
-# Intro-1.ps1
-#
-$STEPS_LOG_FILE = ".\intro-1.log"
+##### [A successful script](./docs/powershell/a-successful-script.md)
 
-. ./.steps.ps1
-trap { do_trap }
+![intro-1.failed.png](./docs/powershell/screenshots/intro-1.successful.png)
 
-do_script
+##### [Generating an error](./docs/powershell/generating-errors.md)
 
-#
-do_step "do something"
+![intro-1.failed.png](./docs/powershell/screenshots/intro-1.failed.png)
 
-Write-Output "doing something"
+##### [Catching exits](./docs/powershell/catching-exits.md)
 
-#
-do_step "do something else"
+![intro-1.catch.png](./docs/powershell/screenshots/intro-1.catch.png)
 
-Write-Output "doing something else"
+##### [Providing more information](./docs/powershell/providing-more-information.md)
 
-#
-do_step "do final thing"
+![intro-1.information.png](./docs/powershell/screenshots/intro-1.information.png)
 
-Write-Output "doing final thing"
+##### [Nesting scripts](./docs/powershell/nesting-scripts.md)
 
-#
-do_exit 0
-```
+![intro-1.nested.png](./docs/powershell/screenshots/intro-1.nested.png)
 
-- `$STEPS_LOG_FILE` is setting the log-file STEPS will use
-- `. ./.steps.ps1` dot-sources / includes / imports the STEPS library into our script
-- `trap { do_trap }` sets up a mechanism to catch the errors thrown in our script or in the STEPS library
-- `do_script` initializes the STEPS library and writes a script-header to both log-file and terminal
-- `do_step` writes a step-header to both log-file and terminal
-- `do_exit 0` writes a script-footer to both log-file and terminal
-- all other output from the script is only sent to the log-file
+### Advanced Topics
 
-  > :bulb:  
-  > you can also use an environment `$env:STEPS_LOG_FILE` to set the log-file
-  > or perhaps you prefer a parameter in your script `param( $STEPS_LOG_FILE = $env:STEPS_LOG_FILE )`
+** TBD [Scripts with parameters]() **
+** TBD [Native commands that write status-info to stderr]() **
+** TBD [Native commands that use exitcode for status-info]() **
+** [Appending to a log-file](./docs/powershell/appending-to-a-log-file.md) **
+** [Changing colors](./docs/powershell/changing-colors.md) **
 
-When running the script, our terminal will now look something like
-
-![intro-1.successful.png](./docs/screenshots/intro-1.successful.png)
-
-And the log-file will look something like
-
-```text
-
-#
-# ======================================================
-# Script: C:\Users\stefaanc\steps\playground\intro-1.ps1
-# ======================================================
-#
-# @ Host: FRM-STEFAANC-L
-# > Log:  .\intro-1.log
-#
-
-
-#
-# do something
-#
-
-doing something
-
-#
-# do something else
-#
-
-doing something else
-
-#
-# do final thing
-#
-
-doing final thing
-
-# ==============================
-```
-
-#### Troubleshooting
+### Troubleshooting
 
 When the script cannot dot-source the STEPS library or the script fails for some reason inside the library, you will typically get some error like
 
-![intro-1.trouble-1.png](./docs/screenshots/intro-1.trouble-1.png)
+![intro-1.trouble-1.png](./docs/powershell/screenshots/intro-1.trouble-1.png)
 
 The issue is that the `do_trap` function has not yet been defined since the dot-sourcing failed.
 To debug, comment out the `trap ( do_trap }` line in your script.  Be aware that the rest of your script will also run, so best to also put a `exit 1` line immediately after the `trap` line.  Re-running your script will now give more details about what is going wrong with the dot-sourcing.
 
-![intro-1.trouble-2.png](./docs/screenshots/intro-1.trouble-2.png)
+![intro-1.trouble-2.png](./docs/powershell/screenshots/intro-1.trouble-2.png)
 
-### Other Features
 
-For a more complete discussion, [click here](./docs/steps-in-powershell.md)
-
-#### Generating an error
-
-![intro-1.failed.png](./docs/screenshots/intro-1.failed.png)
-
-#### Catching exits
-
-![intro-1.catch.png](./docs/screenshots/intro-1.catch.png)
-
-#### Providing more information
-
-![intro-1.information.png](./docs/screenshots/intro-1.information.png)
-
-#### Nested Scripts
-
-![intro-1.nested.png](./docs/screenshots/intro-1.nested.png)
-
-#### Changing Colors
-
-![intro-1.colors.png](./docs/screenshots/intro-1.colors.png)
-
-#### ... and more
 
 <br/>
 
 ## Calling A Script From Packer
 
-> :warning:  
-> The following assumes you have [packer](https://www.packer.io) installed on your machine.
+##### [Calling a powershell script from packer](./docs/powershell/calling-a-script-from-packer.md)
 
-Let's re-use our basic powershell script.
-Since packer will be setting environment variables, we can drop the `$STEPS_LOG_FILE = ` line from the script.
+![intro-1.packer.successful.png](./docs/powershell/screenshots/intro-1.packer.successful.png)
 
-```powershell {.line-numbers}
-#
-# Intro-1.ps1
-#
-
-. ./.steps.ps1
-trap { do_trap }
-
-#...
-```
-
-Now we create a packer JSON file with a provisioner of type `"shell-local"`
-
-```javascript {.line-numbers}
-{
-    "builders": [
-        {
-            "type": "null",
-            "communicator": "none"
-        }
-    ],    
-    "provisioners": [
-        {
-            "type": "shell-local",
-            "execute_command": ["PowerShell", "-NoProfile", "{{.Vars}}{{.Script}}; exit $LASTEXITCODE"],
-            "env_var_format": "$env:%s=\"%s\"; ",
-            "tempfile_extension": ".ps1",
-            "environment_vars": [
-                "STEPS_LOG_FILE=./intro-1.log",
-                "STEPS_LOG_APPEND=false"
-            ],
-            "scripts": [
-                "./Intro-1.ps1"
-            ]
-        }
-    ]
-}
-```
-- Remark that we added `"exit $LASTEXITCODE"` to the `"execute_command"` property of the provioner.  This is propagate to the exitcode from our script to packer.  If that is not done, packer will always report an `Erroneous exit code 1` when things go wrong, instead of the real exitcode.
-
-When running packer, our terminal will now look something like
-
-![intro-1.packer.successful.png](./docs/screenshots/intro-1.packer.successful.png)
-
-- To run packer, we added the option `-color=false` so packer coloring doesn't interfere with STEPS coloring.  You can also do this using an environment variable for packer `$env:PACKER_NO_COLOR = "true"`
-
-Or when we generate an error
+![intro-1.packer.failed.png](./docs/powershell/screenshots/intro-1.packer.failed.png)
 
 
-![intro-1.packer.failed.png](./docs/screenshots/intro-1.packer.failed.png)
-
-> :bulb:  
-> We can also do this for packer post-processors
 
 <br>
 
 ## Learnings and Techniques
 
-- TBD
+### Powershell
+
+- ** TBD **
+
+
 
 <br>
 
