@@ -254,8 +254,6 @@ function do_catch_exit {
     # Write-Host "${N}##### do_catch_exit${X}"   # for debugging
     # Write-Host "${N}##### `$STEPS_STAGE -eq '$STEPS_STAGE'${X}"   # for debugging
 
-Write-Host "### $exitstatus"
-Write-Host "### $IgnoreExitStatus"
     if ( ( ( "$exitcode" -eq "0" ) -or $IgnoreExitCode ) -and ( ( "$exitstatus" -eq "True" ) -or $IgnoreExitStatus ) ) {
         return
     }
