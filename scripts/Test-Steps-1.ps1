@@ -4,26 +4,26 @@
 #
 # using environment vars
 #
-#     $env:STEPS_LOG_FILE = "$ROOT\logs\example-steps.log"
-#     Example-Steps.ps1
+#     $env:STEPS_LOG_FILE = "$ROOT\logs\test-steps.log"
+#     Test-Steps.ps1
 # or
-#     $env:STEPS_LOG_FILE = "$ROOT\logs\example-steps.log"
+#     $env:STEPS_LOG_FILE = "$ROOT\logs\test-steps.log"
 #     $env:STEPS_LOG_APPEND = "true"
-#     Example-Steps.ps1
+#     Test-Steps.ps1
 #
 #
 # using arguments
 #
-#     Example-Steps.ps1 "$ROOT\logs\example-steps.log"
+#     Test-Steps.ps1 "$ROOT\logs\test-steps.log"
 # or
-#     Example-Steps.ps1 "$ROOT\logs\example-steps.log" "true"
+#     Test-Steps.ps1 "$ROOT\logs\test-steps.log" "true"
 #
 #
 # making $global scope vars available in powershell
 #
-#     & Example-Steps.ps1 "$ROOT\logs\example-steps.log"
+#     & Test-Steps.ps1 "$ROOT\logs\test-steps.log"
 # or
-#     & Example-Steps.ps1 "$ROOT\logs\example-steps.log" "true"
+#     & Test-Steps.ps1 "$ROOT\logs\test-steps.log" "true"
 #
 #
 # using packer
@@ -35,11 +35,11 @@
 #             "env_var_format": "$env:%s=\"%s\"; ",
 #             "tempfile_extension": ".ps1",
 #             "environment_vars": [
-#                 "LOG_FILE={{ user `root` }}/logs/local-example-steps.log",
-#                 "LOG_APPEND=false"
+#                 "LOG_FILE={{ user `root` }}/logs/local-test-steps.log",
+#                 "LOG_APPEND="
 #             ],
 #             "scripts": [
-#                 "{{ user `root` }}/scripts/local/Example-Steps.ps1"
+#                 "{{ user `root` }}/scripts/local/Test-Steps.ps1"
 #             ]
 #         }
 #
@@ -128,7 +128,7 @@ echo "xxx"; throw 42; echo "yyy"
 do_step "run another script"
 
 Write-Output "run another script"
-& "$(Split-Path -Path $script:MyInvocation.MyCommand.Path)\Example-Steps-2.ps1"
+& "$(Split-Path -Path $script:MyInvocation.MyCommand.Path)\Test-Steps-2.ps1"
 
 #
 # do final thing
