@@ -76,7 +76,7 @@ Copy the STEPS library into your scripts directory.  You can find it on github i
 
 ![intro-1.failed.png](./docs/powershell/screenshots/intro-1.successful.png)
 
-##### [Generating an error](./docs/powershell/generating-errors.md)
+##### [Generating an error](./docs/powershell/generating-an-error.md)
 
 ![intro-1.failed.png](./docs/powershell/screenshots/intro-1.failed.png)
 
@@ -94,10 +94,10 @@ Copy the STEPS library into your scripts directory.  You can find it on github i
 
 ### Advanced Topics
 
-** TBD [Scripts with parameters]() **
-** TBD [Native commands that write status-info to stderr]() **
-** TBD [Native commands that use exitcode for status-info]() **
-** [Appending to a log-file](./docs/powershell/appending-to-a-log-file.md) **
+TBD [** Scripts with parameters **]()  
+** TBD [Native commands that write status-info to stderr]() **  
+** TBD [Native commands that use exitcode for status-info]() **  
+** [Appending to a log-file](./docs/powershell/appending-to-a-log-file.md) **  
 ** [Changing colors](./docs/powershell/changing-colors.md) **
 
 ### Troubleshooting
