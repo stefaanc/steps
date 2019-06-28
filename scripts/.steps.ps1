@@ -27,13 +27,15 @@ if ( "$STEPS_STAGE" -eq "" ) {
     # Write-Host "${N}##### `$STEPS_STAGE -eq '$STEPS_STAGE'${X}"   # for debugging
 
     $STEPS_SCRIPT = $script:MyInvocation.PSCommandPath
+    if ( !(Get-Variable -Name "STEPS_PARAMS" -ErrorAction 'Ignore') ) {
+        $STEPS_PARAMS = @{}
+    }
     if ( !(Get-Variable -Name "STEPS_LOG_FILE" -ErrorAction 'Ignore') ) {
         $STEPS_LOG_FILE = $env:STEPS_LOG_FILE
     }
     if ( !(Get-Variable -Name "STEPS_LOG_APPEND" -ErrorAction 'Ignore') ) {
         $STEPS_LOG_APPEND = $env:STEPS_LOG_APPEND
     }
-    $STEPS_LOG_APPEND = "$STEPS_LOG_APPEND".ToLower()
 
     $ErrorActionPreference='Stop'
     if ( "$STEPS_LOG_FILE" -eq "" ) {
@@ -99,17 +101,17 @@ function do_exec {   # called from 1st 'do_script'
     try {
         # Write-Host "${N}##### do_exec - try${X}"   # for debugging
         if ( "$STEPS_LOG_FILE" -eq "" ) {
-            & "$STEPS_SCRIPT"
+            & "$STEPS_SCRIPT" @STEPS_PARAMS
         }
         else {
             if ( !$( Test-Path -Path "$( Split-Path -Path "$STEPS_LOG_FILE" )" ) ) {
                 New-Item -ItemType directory -Path "$( Split-Path -Path "$STEPS_LOG_FILE" )" | Out-Null
             }
-            if ( ( "$STEPS_LOG_APPEND" -eq "" ) -or ( "$STEPS_LOG_APPEND" -eq "false" ) ) {
-                & "$STEPS_SCRIPT" "$STEPS_LOG_FILE" 5>&1 4>&1 3>&1 2>&1 > "$STEPS_LOG_FILE"
+            if ( !$STEPS_LOG_APPEND ) {
+                & "$STEPS_SCRIPT" @STEPS_PARAMS 5>&1 4>&1 3>&1 2>&1 > "$STEPS_LOG_FILE"
             }
             else {
-                & "$STEPS_SCRIPT" "$STEPS_LOG_FILE" "$STEPS_LOG_APPEND" 5>&1 4>&1 3>&1 2>&1 >> "$STEPS_LOG_FILE"
+                & "$STEPS_SCRIPT" @STEPS_PARAMS 5>&1 4>&1 3>&1 2>&1 >> "$STEPS_LOG_FILE"
             }
         }
     }
@@ -133,7 +135,7 @@ function do_script {
         $hostname = "@ Host: $env:COMPUTERNAME"
         if ( "$STEPS_LOG_FILE" -ne "" ) {
             $log = "$STEPS_LOG_FILE".Replace("/", "\")
-            if ( ( "$STEPS_LOG_APPEND" -eq "" ) -or ( "$STEPS_LOG_APPEND" -eq "false" ) ) {
+            if ( !$STEPS_LOG_APPEND ) {
                 $log = "> Log:  $log"
             }
             else {
@@ -200,7 +202,7 @@ function do_echo {
 
 function do_reset {
     # Write-Host "${N}##### do_reset${X}"   # for debugging
-    cmd /c "exit 0"
+    cmd /c "exit 0"   # reset $?, reset $LASTEXITCODE
     $Error.Clear()
 }
 
@@ -243,12 +245,18 @@ function do_exit {
 }
 
 function do_catch_exit {
+    param(
+        [switch]$IgnoreExitStatus,
+        [switch]$IgnoreExitCode
+    )
     $exitstatus = $?   # do this first so it is not overwritten
     $exitcode = $LASTEXITCODE   # remark: this may be an old exitcode when not all exitcodes are caught
     # Write-Host "${N}##### do_catch_exit${X}"   # for debugging
     # Write-Host "${N}##### `$STEPS_STAGE -eq '$STEPS_STAGE'${X}"   # for debugging
 
-    if ( ( "$exitcode" -eq "0" ) -and ( "$exitstatus" -eq "True" ) ) {
+Write-Host "### $exitstatus"
+Write-Host "### $IgnoreExitStatus"
+    if ( ( ( "$exitcode" -eq "0" ) -or $IgnoreExitCode ) -and ( ( "$exitstatus" -eq "True" ) -or $IgnoreExitStatus ) ) {
         return
     }
     else {
@@ -269,8 +277,9 @@ function do_catch_exit {
     }
 }
 
-function do_check_exit {
-    if ( !$? ) { exit $LASTEXITCODE }
+function do_continue {
+    # Write-Host "${N}##### do_continue${X}"   # for debugging
+    cmd /c "exit 0"   # reset $?, reset $LASTEXITCODE
 }
 
 function do_trap {
