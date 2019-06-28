@@ -35,7 +35,7 @@ do_exit 0
 
 - `$STEPS_LOG_APPEND = $true` appends the output to the log-file.
 
-  > :info_source:  
+  > :information_source:  
   > A value `$false`, `$null`, or `""` disables appending.  
   > Any other value enables appending.
 
