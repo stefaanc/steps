@@ -72,33 +72,33 @@ Copy the STEPS library into your scripts directory.  You can find it on github i
 
 ### The Basics
 
-##### [A successful script](./docs/powershell/a-successful-script.md)
+#### [A successful script](./docs/powershell/a-successful-script.md)
 
 ![intro-1.failed.png](./docs/powershell/screenshots/intro-1.successful.png)
 
-##### [Generating an error](./docs/powershell/generating-an-error.md)
+#### [Generating an error](./docs/powershell/generating-an-error.md)
 
 ![intro-1.failed.png](./docs/powershell/screenshots/intro-1.failed.png)
 
-##### [Catching exits](./docs/powershell/catching-exits.md)
+#### [Catching exits](./docs/powershell/catching-exits.md)
 
 ![intro-1.catch.png](./docs/powershell/screenshots/intro-1.catch.png)
 
-##### [Providing more information](./docs/powershell/providing-more-information.md)
+#### [Providing more information](./docs/powershell/providing-more-information.md)
 
 ![intro-1.information.png](./docs/powershell/screenshots/intro-1.information.png)
 
-##### [Nesting scripts](./docs/powershell/nesting-scripts.md)
+#### [Nesting scripts](./docs/powershell/nesting-scripts.md)
 
 ![intro-1.nested.png](./docs/powershell/screenshots/intro-1.nested.png)
 
 ### Advanced Topics
 
-TBD [** Scripts with parameters **]()  
-** TBD [Native commands that write status-info to stderr]() **  
-** TBD [Native commands that use exitcode for status-info]() **  
-** [Appending to a log-file](./docs/powershell/appending-to-a-log-file.md) **  
-** [Changing colors](./docs/powershell/changing-colors.md) **
+** TBD ** [Scripts with parameters]()  
+** TBD ** [Native commands that write status-info to stderr]()  
+** TBD ** [Native commands that use exitcode for status-info]()  
+[Appending to a log-file](./docs/powershell/appending-to-a-log-file.md)  
+[Changing colors](./docs/powershell/changing-colors.md)
 
 ### Troubleshooting
 
@@ -117,7 +117,7 @@ To debug, comment out the `trap ( do_trap }` line in your script.  Be aware that
 
 ## Calling A Script From Packer
 
-##### [Calling a powershell script from packer](./docs/powershell/calling-a-script-from-packer.md)
+#### [Calling a powershell script from packer](./docs/powershell/calling-a-script-from-packer.md)
 
 ![intro-1.packer.successful.png](./docs/powershell/screenshots/intro-1.packer.successful.png)
 
