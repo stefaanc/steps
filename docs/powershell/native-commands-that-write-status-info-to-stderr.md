@@ -52,7 +52,7 @@ However, as soon as we redirect the error stream, powershell picks the output on
 When you use the STEPS library, all streams except for the "Information" stream are redirected to a log-file, hence triggering powershell to transform the output on `stderr` into a powershell error.  
 The powershell error is non-terminating.  However, since STEPS always sets `$ErrorActionPreference = 'Stop'`, this error is transformed into a terminating error.
 
-![intro-1.colors.png](./screenshots/intro-1.stderr-problem-1.png)
+![intro-1.colors.png](./screenshots/intro-1.stderr-problem.png)
 
 - Remark that this is now a terminating error - `$?` is false, indicating that the command failed.
 
