@@ -94,8 +94,8 @@ Copy the STEPS library into your scripts directory.  You can find it on github i
 
 ### Advanced Topics
 
-**TBD** [**Scripts with parameters**]()  
-**TBD** [**Native commands that write status-info to stderr**]()  
+[**Scripts with parameters**](./docs/powershell/scripts-with-parameters.md)  
+[**Native commands that write status-info to stderr**](./docs/powershell/native-commands-that-write-status-info-to-stderr.md)  
 **TBD** [**Native commands that use exitcode for status-info**]()  
 [**Appending to a log-file**](./docs/powershell/appending-to-a-log-file.md)  
 [**Changing colors**](./docs/powershell/changing-colors.md)
@@ -139,11 +139,13 @@ To debug, comment out the `trap ( do_trap }` line in your script.  Be aware that
 
 ## For Further Investigation
 
-- reset exit-code and/or errors-array at start of a script (with an option?)
+- reset errors-array at start of a script (with an option?)
 - add a script/function trace to error output (with an option?)
 - using aliases `exit` and `echo` for `do_exit` and `do_echo` (is this possible?)
-- research and cover other ways of running a command (f.i. powershell Invoke methods)
+- in powershell: research and cover other ways of running a command (f.i. powershell Invoke methods)
 - in powershell: add an option to leave script with exception instead of exitcode?
 - in powershell: correct the error-records for `do_exit` and `do_catch_exit` (is this possible?)
+- in powershell: research difference between white and red `$Error` output (see [**Native commands that write status-info to stderr**](./docs/powershell/native-commands-that-write-status-info-to-stderr.md))
+- in powershell: recover the output from native commands, written to `stderr` and stored in `$Error`, and write it to Success stream (see [**Native commands that write status-info to stderr**](./docs/powershell/native-commands-that-write-status-info-to-stderr.md)).
 - use PSScriptAnalyser
 - automated testing (or automation assisted testing)
