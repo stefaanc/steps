@@ -24,7 +24,7 @@ Write-Output "doing something"
 #
 do_step "do something else"
 
-( cmd /c "echo 'my-status'>&2" ); do_catch_exit # <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+( cmd /c "echo 'my-status'>&2" ); do_catch_exit   # <<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 #
 do_step "do final thing"
@@ -84,7 +84,7 @@ Write-Output "doing something"
 #
 do_step "do something else"
 
-try { ( cmd /c "echo 'my-status'>&2" ) } catch { do_continue }; do_catch_exit # <<<<<<<<<<
+try { ( cmd /c "echo 'my-status'>&2" ) } catch { do_continue }; do_catch_exit   # <<<<<<<<<<
 
 #
 do_step "do final thing"
@@ -179,7 +179,7 @@ The problem is that as soon as powershell picks up something from `stderr`, the 
 
 ### Temporarily set `$ErrorActionPreference = 'Continue'`
 
-We can temporarily relax the error-action preference to avoid that the output on `stderr` triggers an error.
+We can temporarily relax the error-action preference to avoid that the output to `stderr` triggers an error.
 
 ```powershell
 #
@@ -219,7 +219,14 @@ do_exit 0
 
 If we now look at the terminal, we get an all-clear like above.
 
-![intro-1.colors.png](./screenshots/intro-1.stderr-solved-1.png)
+![intro-1.colors.png](./screenshots/intro-1.stderr-solved-2.png)
+
+- Remark that `$Error` on the terminal gives red output.  Compare this to the screenshot where we used the try-catch statement, you can see that the `$Error` output was white.  
+  I didn't investigate in detail what the difference is between red and white errors.  This is left for futher research.  
+
+  > :information_source:  
+  > If you use `$ErrorActionPreference = 'SilentlyContinue'` instead of `$ErrorActionPreference = 'Continue'`, the `$Error` output will be white.  
+  > Both preferences lead to the same result when using STEPS.
 
 If we look at the log-file
 
@@ -264,10 +271,3 @@ doing final thing
 ```
 
 - Remark we now see `my_status` and `my_output` in the log-file.
-
-- Remark that `$Error` on the terminal gives red output.  Compare this to the screenshot where we used the try-catch statement, you can see that the `$Error` output was white.  
-  I didn't investigate in detail what the difference is between red and white errors.  
-
-  > :information_source:  
-  > If you use `$ErrorActionPreference = 'SilentlyContinue'` instead of `$ErrorActionPreference = 'Continue'`, the `$Error` output will be white.  
-  > Both preferences lead to the same result when using STEPS.
