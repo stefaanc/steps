@@ -72,7 +72,7 @@ _______________________________________________________start scope powershell___
 |  |  |  |      |  |  
 |  |  |  |      |  |  do_script   # Example-Steps-2
 |  |  |  |      |  |
-|  |  |  |      |  |  throw "my error"   # Example-Steps-2                      <<< Example-Steps-2 throws and activates trap
+|  |  |  |      |  |  throw "my error"   # Example-Steps-2  <<< Example-Steps-2 throws and activates trap
 |  |  |  |      |  |
 |  |  |  |      |  |  ...........................................call do_trap...
 |  |  |  |      |  |  # ( $STEPS_STAGE -eq "branch" )
@@ -80,7 +80,7 @@ _______________________________________________________start scope powershell___
 |  |  |  |      |  |
 |  |  |  |      |  |  $global:LASTEXITTRAPPED = $true
 |  |  |  |      |  |  
-|  |  |  |      |  |  throw $Error[0].Exception                                 <<< Example-Steps-2 propagates error
+|  |  |  |      |  |  throw $Error[0].Exception             <<< Example-Steps-2 propagates error
 |  |  |  |      |  |  ............................................end do_trap...
 |  |  |  |      |  |____________________________end scope Example-Steps-2.ps1___
 |  |  |  |      |
@@ -88,7 +88,7 @@ _______________________________________________________start scope powershell___
 |  |  |  |      |  # ( $STEPS_STAGE -eq "root" )
 |  |  |  |      |  # ( $global:LASTEXITTRAPPED -eq $true )
 |  |  |  |      |
-|  |  |  |      |  throw $Error[0].Exception                                    <<< 2nd Example-Steps propagates error
+|  |  |  |      |  throw $Error[0].Exception                <<< 2nd Example-Steps propagates error
 |  |  |  |      |  ...............................................end do_trap...
 |  |  |  |      |_____________________________end scope 2nd Example-Steps.ps1___
 |  |  |  |
@@ -96,7 +96,7 @@ _______________________________________________________start scope powershell___
 |  |  |  |  catch {
 |  |  |  |      # ( $STEPS_STAGE -eq "init" )
 |  |  |  |
-|  |  |  |      exit $LASTEXITCODE   # 1st Example-Steps                        <<< 1st Example-Steps/do_exec doesn't propagate error,
+|  |  |  |      exit $LASTEXITCODE   # 1st Example-Steps    <<< 1st Example-Steps/do_exec doesn't propagate error
 |  |  |  |  }
 |  |  |  |________________________________________________________end do_exec___
 |  |  |_____________________________________________________end 1st do_script___
