@@ -184,7 +184,7 @@ Write-Output "doing something"
 #
 do_step "do something else"
 
-Get-ChildItem | Format-Table | Out-String | do_echo
+Get-ChildItem | Format-Table | Out-String | do_echo   # <<<<<<<<<<<<<<<<<<<<<<<<
 
 #
 do_step "do final thing"
