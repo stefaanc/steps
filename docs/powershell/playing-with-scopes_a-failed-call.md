@@ -6,7 +6,7 @@ An illustration of the flow through the various scopes in a successful scenario,
 
 ```
 Powershell.exe
-______________________________________________________start scope powershell___
+_______________________________________________________start scope powershell___
 | 
 |  ...
 |
@@ -19,10 +19,10 @@ ______________________________________________________start scope powershell___
 |  # ( $Error.Count -eq 0 )
 |
 |  PS > & Example-Steps.ps1
-|  ____________________________________________start scope 1st Example-Steps___
+|  _________________________________________start scope 1st Example-Steps.ps1___
 |  |
 |  |  . .steps.ps1
-|  |  ......................................................start 1st .steps...
+|  |  ...................................................start 1st .steps.ps1...
 |  |  $STEPS_STAGE = "init"
 |  |  $STEPS_SCRIPT = $script:MyInvocation.PSCommandPath
 |  |
@@ -38,69 +38,69 @@ ______________________________________________________start scope powershell___
 |  |  function do_catch_exit { ... }
 |  |  function do_continue { ... }
 |  |  function do_trap { ... }
-|  |  ........................................................end 1st .steps...
+|  |  .....................................................end 1st .steps.ps1...
 |  |  trap { do_trap }
 |  |  
 |  |  do_script
-|  |  ___________________________________________________start 1st do_script___
-|  |  |  ______________________________________________________start do_exec___
+|  |  ____________________________________________________start 1st do_script___
+|  |  |  _______________________________________________________start do_exec___
 |  |  |  |
 |  |  |  |  try {
 |  |  |  |
 |  |  |  |      & "$STEPS_SCRIPT" @STEPS_PARAMS 5>&1 4>&1 3>&1 2>&1 > "$STEPS_LOG_FILE"
-|  |  |  |      _______________________________start scope 2nd Example-Steps___
+|  |  |  |      ____________________________start scope 2nd Example-Steps.ps1___
 |  |  |  |      |
 |  |  |  |      |  . .steps.ps1
-|  |  |  |      |  .........................................start 2nd .steps...
+|  |  |  |      |  ......................................start 2nd .steps.ps1...
 |  |  |  |      |  $STEPS_STAGE = "root"
 |  |  |  |      |  return
-|  |  |  |      |  ...........................................end 2nd .steps...
+|  |  |  |      |  ........................................end 2nd .steps.ps1...
 |  |  |  |      |  trap { do_trap }
 |  |  |  |      |  
 |  |  |  |      |  do_script
 |  |  |  |      |
 |  |  |  |      |  do_step "run another script"
 |  |  |  |      |  & "Example-Steps-2.ps1"
-|  |  |  |      |  ______________________________start scope Example-Steps-2___
+|  |  |  |      |  ___________________________start scope Example-Steps-2.ps1___
 |  |  |  |      |  |
 |  |  |  |      |  |  . .steps.ps1
-|  |  |  |      |  |  ......................................start 3rd .steps...
+|  |  |  |      |  |  ...................................start 3rd .steps.ps1...
 |  |  |  |      |  |  $STEPS_STAGE = "branch"
 |  |  |  |      |  |  return
-|  |  |  |      |  |  ........................................end 3rd .steps...
+|  |  |  |      |  |  .....................................end 3rd .steps.ps1...
 |  |  |  |      |  |  trap { do_trap }
 |  |  |  |      |  |  
 |  |  |  |      |  |  do_script   # Example-Steps-2
 |  |  |  |      |  |
-|  |  |  |      |  |  throw "my error"   # Example-Steps-2                     <<< Example-Steps-2 throws and activates trap
+|  |  |  |      |  |  throw "my error"   # Example-Steps-2                      <<< Example-Steps-2 throws and activates trap
 |  |  |  |      |  |
-|  |  |  |      |  |  ..........................................call do_trap...
+|  |  |  |      |  |  ...........................................call do_trap...
 |  |  |  |      |  |  # ( $STEPS_STAGE -eq "branch" )
 |  |  |  |      |  |  # ( $global:LASTEXITTRAPPED -eq $null )
 |  |  |  |      |  |
 |  |  |  |      |  |  $global:LASTEXITTRAPPED = $true
 |  |  |  |      |  |  
-|  |  |  |      |  |  throw $Error[0].Exception                                <<< Example-Steps-2 propagates error
-|  |  |  |      |  |  ...........................................end do_trap...
-|  |  |  |      |  |_______________________________end scope Example-Steps-2___
+|  |  |  |      |  |  throw $Error[0].Exception                                 <<< Example-Steps-2 propagates error
+|  |  |  |      |  |  ............................................end do_trap...
+|  |  |  |      |  |____________________________end scope Example-Steps-2.ps1___
 |  |  |  |      |
-|  |  |  |      |  .............................................call do_trap...
+|  |  |  |      |  ..............................................call do_trap...
 |  |  |  |      |  # ( $STEPS_STAGE -eq "root" )
 |  |  |  |      |  # ( $global:LASTEXITTRAPPED -eq $true )
 |  |  |  |      |
-|  |  |  |      |  throw $Error[0].Exception                                   <<< 2nd Example-Steps propagates error
-|  |  |  |      |  ..............................................end do_trap...
-|  |  |  |      |________________________________end scope 2nd Example-Steps___
+|  |  |  |      |  throw $Error[0].Exception                                    <<< 2nd Example-Steps propagates error
+|  |  |  |      |  ...............................................end do_trap...
+|  |  |  |      |_____________________________end scope 2nd Example-Steps.ps1___
 |  |  |  |
 |  |  |  |  }
 |  |  |  |  catch {
 |  |  |  |      # ( $STEPS_STAGE -eq "init" )
 |  |  |  |
-|  |  |  |      exit $LASTEXITCODE   # 1st Example-Steps                       <<< 1st Example-Steps/do_exec doesn't propagate error,
+|  |  |  |      exit $LASTEXITCODE   # 1st Example-Steps                        <<< 1st Example-Steps/do_exec doesn't propagate error,
 |  |  |  |  }
-|  |  |  |_______________________________________________________end do_exec___
-|  |  |____________________________________________________end 1st do_script___
-|  |_____________________________________________end scope 1st Example-Steps___
+|  |  |  |________________________________________________________end do_exec___
+|  |  |_____________________________________________________end 1st do_script___
+|  |__________________________________________end scope 1st Example-Steps.ps1___
 |
 |  # ( $? -eq $false )
 |  # ( $LASTEXITCODE -eq 99999 )
@@ -110,7 +110,7 @@ ______________________________________________________start scope powershell___
 |  PS > _
 |  ...
 |   
-|_______________________________________________________end scope powershell___
+|________________________________________________________end scope powershell___
 
 ```
 
