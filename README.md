@@ -135,7 +135,8 @@ To debug, comment out the `trap ( do_trap }` line in your script.  Be aware that
 
 ### Powershell
 
-- **TBD**
+[**Playing with scopes - A successful call**](./docs/powershell/screenshots/playing-with-scopes_a-successful-call.md)
+[**Playing with scopes - A failed call**](./docs/powershell/screenshots/playing-with-scopes_a-failed-call.md)
 
 
 
