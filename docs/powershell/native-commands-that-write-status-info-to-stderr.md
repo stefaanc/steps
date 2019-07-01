@@ -1,6 +1,6 @@
 ## Native Commands That Write Status-Info To stderr
 
-Some native commands, like `curl` or `openssl`, write status-info to the standard error stream (`stderr`).  When the standard output stream (`stdout`) is used for output that is typically captured in a file or piped to another command, then one of the only ways a native command can provide extra information without polluting the standard output, is to write to the error stream.
+Some native commands, like `curl` or `openssl`, write status-info to the standard error stream (`stderr`).  When the standard output stream (`stdout`) is used for output that is typically captured in a file or piped to another command, then one of the only two ways a native command can provide extra information without polluting the standard output, is to write to the error stream (the second way is for the native command to use the exit-code to return a status-indication).
 
 Let's write a script to simulate this
 
