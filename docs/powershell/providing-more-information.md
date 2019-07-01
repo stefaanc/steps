@@ -185,13 +185,6 @@ Write-Output "doing something"
 do_step "do something else"
 
 Get-ChildItem | Format-Table | Out-String | do_echo
-for ($i = 1; $i -le 3; $i++) {
-    do_echo @"                   # <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-still busy                       # <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-please wait...                   # <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-"@                               # <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-    Start-Sleep 1
-}
 
 #
 do_step "do final thing"
