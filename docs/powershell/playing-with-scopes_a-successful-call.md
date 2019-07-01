@@ -18,8 +18,8 @@ _______________________________________________________start scope powershell___
 |  # ( $LASTEXITCODE -eq 0 )
 |  # ( $Error.Count -eq 0 )
 |
-|  PS > & Example-Steps.ps1
-|  _________________________________________start scope 1st Example-Steps.ps1___
+|  PS > & Example-Steps-1.ps1
+|  _______________________________________start scope 1st Example-Steps-1.ps1___
 |  |
 |  |  . .steps.ps1
 |  |  ...................................................start 1st .steps.ps1...
@@ -48,7 +48,7 @@ _______________________________________________________start scope powershell___
 |  |  |  |  try {
 |  |  |  |
 |  |  |  |      & "$STEPS_SCRIPT" @STEPS_PARAMS 5>&1 4>&1 3>&1 2>&1 > "$STEPS_LOG_FILE"
-|  |  |  |      ____________________________start scope 2nd Example-Steps.ps1___
+|  |  |  |      __________________________start scope 2nd Example-Steps-1.ps1___
 |  |  |  |      |
 |  |  |  |      |  . .steps.ps1
 |  |  |  |      |  ......................................start 2nd .steps.ps1...
@@ -57,7 +57,7 @@ _______________________________________________________start scope powershell___
 |  |  |  |      |  ........................................end 2nd .steps.ps1...
 |  |  |  |      |  trap { do_trap }
 |  |  |  |      |  
-|  |  |  |      |  do_script   # Example-Steps
+|  |  |  |      |  do_script   # Example-Steps-1
 |  |  |  |      |
 |  |  |  |      |  do_step "run another script"
 |  |  |  |      |  & "Example-Steps-2.ps1"
@@ -77,8 +77,8 @@ _______________________________________________________start scope powershell___
 |  |  |  |      |
 |  |  |  |      |  # ( $STEPS_STAGE -eq "root" )
 |  |  |  |      |
-|  |  |  |      |  do_exit 0   # 2nd Example-Steps 
-|  |  |  |      |_____________________________end scope 2nd Example-Steps.ps1___
+|  |  |  |      |  do_exit 0   # 2nd Example-Steps-1 
+|  |  |  |      |___________________________end scope 2nd Example-Steps-1.ps1___
 |  |  |  |      
 |  |  |  |      # ( $STEPS_STAGE -eq "init" )
 |  |  |  |
@@ -89,7 +89,7 @@ _______________________________________________________start scope powershell___
 |  |  |  |  exit 0
 |  |  |  |________________________________________________________end do_exec___
 |  |  |_____________________________________________________end 1st do_script___
-|  |__________________________________________end scope 1st Example-Steps.ps1___
+|  |________________________________________end scope 1st Example-Steps-1.ps1___
 |
 |  # ( $? -eq $true )
 |  # ( $LASTEXITCODE -eq 0 )
