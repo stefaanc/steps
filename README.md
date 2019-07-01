@@ -148,7 +148,7 @@ To debug, comment out the `trap ( do_trap }` line in your script.  Be aware that
 - add a script/function trace to error output (with an option?)
 - using aliases `exit` and `echo` for `do_exit` and `do_echo` (is this possible?)
 - in powershell: research and cover other ways of running a command (f.i. powershell Invoke methods)
-- in powershell: add an option to leave script with exception instead of exitcode?
+- in powershell: add an option to leave root-script with exception instead of exitcode?
 - in powershell: correct the error-records for `do_exit` and `do_catch_exit` (is this possible?)
 - in powershell: research difference between white and red `$Error` output (see [**Native commands that write status-info to stderr**](./docs/powershell/native-commands-that-write-status-info-to-stderr.md))
 - in powershell: recover the output from native commands, written to `stderr` and stored in `$Error`, and write it to Success stream (see [**Native commands that write status-info to stderr**](./docs/powershell/native-commands-that-write-status-info-to-stderr.md)).
