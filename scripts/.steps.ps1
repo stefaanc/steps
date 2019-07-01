@@ -104,9 +104,11 @@ function do_exec {   # called from 1st 'do_script'
             & "$STEPS_SCRIPT" @STEPS_PARAMS
         }
         else {
-            if ( !$( Test-Path -Path "$( Split-Path -Path "$STEPS_LOG_FILE" )" ) ) {
-                New-Item -ItemType directory -Path "$( Split-Path -Path "$STEPS_LOG_FILE" )" | Out-Null
+            $path = Split-Path -Path "$STEPS_LOG_FILE"
+            if ( $path -and !$( Test-Path -Path "$path" ) ) {
+                New-Item -ItemType directory -Path "$path" | Out-Null
             }
+
             if ( !$STEPS_LOG_APPEND ) {
                 & "$STEPS_SCRIPT" @STEPS_PARAMS 5>&1 4>&1 3>&1 2>&1 > "$STEPS_LOG_FILE"
             }
@@ -191,13 +193,18 @@ function do_step {
 
 function do_echo {
     param (
+        [Parameter(Position = 0, ValueFromPipeline = $true)]
         [string]$message
     )
     # Write-Host "${N}##### do_echo${X}"   # for debugging
 
-    Write-Information "${Y}${STEPS_INDENT}.   $message${X}"
-
-    Write-Output ".   $message"
+    process {
+        "$message".Replace("`r`n", "`n").Split("`n") | foreach-object {
+            $line = "$_".TrimEnd()
+            Write-Information "${Y}${STEPS_INDENT}.   $line${X}"
+            Write-Output "# $line"
+        }
+    }
 }
 
 function do_reset {
@@ -247,7 +254,8 @@ function do_exit {
 function do_catch_exit {
     param(
         [switch]$IgnoreExitStatus,
-        [switch]$IgnoreExitCode
+        [switch]$IgnoreExitCode,
+        [string]$IgnoreExitCodes
     )
     $exitstatus = $?   # do this first so it is not overwritten
     $exitcode = $LASTEXITCODE   # remark: this may be an old exitcode when not all exitcodes are caught
@@ -255,23 +263,45 @@ function do_catch_exit {
     # Write-Host "${N}##### `$STEPS_STAGE -eq '$STEPS_STAGE'${X}"   # for debugging
 
     if ( ( ( "$exitcode" -eq "0" ) -or $IgnoreExitCode ) -and ( ( "$exitstatus" -eq "True" ) -or $IgnoreExitStatus ) ) {
+        if ( "$exitstatus" -ne "0" ) {
+            $global:LASTIGNOREDEXITCODE = $exitcode
+            cmd /c "exit 0"   # reset $LASTEXITCODE
+        }
+
         return
     }
     else {
-        $global:LASTEXITSCRIPT = $MyInvocation.ScriptName
+        $script = $MyInvocation.ScriptName
         $command_start = $MyInvocation.OffsetInLine
         $command_length = $MyInvocation.PositionMessage.Split("`n")[-1].Replace('+', '').Replace(' ', '').Length
-        $global:LASTEXITCOMMAND = $MyInvocation.Line.Substring($command_start - 1, $command_length)
-        $global:LASTEXITLINENO = $MyInvocation.ScriptLineNumber
-        $global:LASTEXITCHARNO = $MyInvocation.OffsetInLine
-        $global:LASTEXITMESSAGE = "caught exitcode $exitcode"
+        $command = $MyInvocation.Line.Substring($command_start - 1, $command_length)
+        $lineno = $MyInvocation.ScriptLineNumber
+        $charno = $MyInvocation.OffsetInLine
 
-        if ( "$exitstatus" -eq "0" ) {   # -and ( "$exitstatus" -ne "True" )
-            $exitcode = -99999
-            cmd /c "exit -99999"   # set correct $LASTEXITCODE
+        if ( ( $IgnoreExitCodes -and ( " $( "$IgnoreExitCodes".Replace(",", " ") ) " -like "* $exitcode *" ) ) -and ( ( "$exitstatus" -eq "True" ) -or $IgnoreExitStatus ) ) {
+            $message = "ignored exitcode $exitcode"
+            $text = "EXITCODE: $exitcode, line: $lineno, char: $charno, cmd: '$( "$command".Replace("'", "`'") )' > `"$( "$message".Replace('"', '`"') )`""
+            do_echo "$text"
+
+            $global:LASTIGNOREDEXITCODE = $exitcode
+            cmd /c "exit 0"   # reset $LASTEXITCODE
+
+            return
         }
+        else {
+            $global:LASTEXITSCRIPT = $script
+            $global:LASTEXITCOMMAND = $command
+            $global:LASTEXITLINENO = $lineno
+            $global:LASTEXITCHARNO = $charno
+            $global:LASTEXITMESSAGE = "caught exitcode $exitcode"
 
-        throw $LASTEXITMESSAGE
+            if ( "$exitstatus" -eq "0" ) {   # -and ( "$exitstatus" -eq "False" )
+                $exitcode = -99999
+                cmd /c "exit -99999"   # set correct $LASTEXITCODE
+            }
+
+            throw $LASTEXITMESSAGE
+        }
     }
 }
 
@@ -288,22 +318,17 @@ function do_trap {
     if ( ! $LASTEXITTRAPPED ) {
         if ( "$LASTEXITLINENO" -ne "" ) {
             # thrown by 'do_exit' or 'do_catch_exit'
-            $exitcode = $LASTEXITCODE
 
             $script = $LASTEXITSCRIPT
             $command = $LASTEXITCOMMAND
             $lineno = $LASTEXITLINENO
             $charno = $LASTEXITCHARNO
             $message = $LASTEXITMESSAGE
+
+            $exitcode = $LASTEXITCODE
         }
         else {
             # thrown directly
-            $exitcode = $LASTEXITCODE   # remark: this may be an old exitcode when not all exitcodes are caught
-            if ( ( "$exitcode" -eq "0" ) -or ( "$exitcode" -eq "" ) ){
-                # thrown without exitcode
-                $exitcode = 99999
-                cmd /c "exit $exitcode"   # set correct $LASTEXITCODE
-            }
 
             $script = $Error[0].InvocationInfo.ScriptName
             $command_start = $Error[0].InvocationInfo.OffsetInLine
@@ -312,6 +337,13 @@ function do_trap {
             $lineno = $Error[0].InvocationInfo.ScriptLineNumber
             $charno = $Error[0].InvocationInfo.OffsetInLine
             $message = $Error[0].Exception.Message
+
+            $exitcode = $LASTEXITCODE   # remark: this may be an old exitcode when not all exitcodes are caught
+            if ( ( "$exitcode" -eq "0" ) -or ( "$exitcode" -eq "" ) ){
+                # thrown without exitcode
+                $exitcode = 99999
+                cmd /c "exit $exitcode"   # set correct $LASTEXITCODE
+            }
 
             if ( "$message" -eq "" ) {
                 # thrown without a message
