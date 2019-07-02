@@ -58,7 +58,11 @@ The powershell error is non-terminating.  However, since STEPS always sets `$Err
 
 <br/>
 
-There are a couple of things we can do to solve this behaviour.
+There are a couple of things we can do to solve this behaviour:
+- [Capture the error in a try-catch statement](#capture-the-error-in-a-try-catch-statement)
+- [Temporarily set `$ErrorActionPreference = 'Continue'`](#temporarily-set-erroractionpreference--continue)
+
+<br/>
 
 ### Capture the error in a try-catch statement
 
@@ -177,6 +181,8 @@ doing final thing
 
 The problem is that as soon as powershell picks up something from `stderr`, the command gets killed.  The solution is to make sure powershell does not transform the `stderr` output into an error.
 
+<br/>
+
 ### Temporarily set `$ErrorActionPreference = 'Continue'`
 
 We can temporarily relax the error-action preference to avoid that the output to `stderr` triggers an error.
@@ -215,7 +221,7 @@ do_exit 0
 ```
 
 > :bulb:  
-> You could use `Invoke-Command` with an option `-ErrorAction 'Continue'` to get the same effect.
+> You could use `Invoke-Command` or `Invoke-Expression` with an option `-ErrorAction 'Continue'` to get the same effect.
 
 If we now look at the terminal, we get an all-clear like above.
 
@@ -271,3 +277,95 @@ doing final thing
 ```
 
 - Remark we now see `my_status` and `my_output` in the log-file.
+
+<br/>
+
+In the previous, we have been hiding an issue with the way we called our native command.  Let's slightly modify our script
+
+```powershell
+#
+# Intro-1.ps1
+#
+
+$STEPS_LOG_FILE = "./intro-1.log"
+
+. ./.steps.ps1
+trap { do_trap }
+
+do_script
+
+#
+do_step "do something"
+
+Write-Output "doing something"
+
+#
+do_step "do something else"
+
+$ErrorActionPreference = 'Continue'
+cmd /c "echo 'my-status'>&2 & echo 'my-output'"; do_catch_exit   # <<<<<<<<<<<<<
+$ErrorActionPreference = 'Stop'
+
+#
+do_step "do final thing"
+
+Write-Output "doing final thing"
+
+#
+do_exit 0
+```
+
+- Remark that we dropped the `()` around our `cmd` command
+
+Running this gives
+
+![intro-1.colors.png](./screenshots/intro-1.stderr-no-parentheses.png)
+
+- The reason is that, although we made the error non-terminating, the `$?` variable still returns `False`, meaning that the command failed.  
+  By encapsulating the command in parentheses, the closing parenthesis behaves like a separate command and sets the `$?` variable to `True`, meaning that this command successfully completed.
+
+Solutions to the problem are:
+- add parentheses around your native commands
+- add an option `-IgnoreExitStatus` to `do_catch_exit`
+
+  > :information_source:
+  > `do_catch_exit` has a couple of parameters:
+  > - `-IgnoreExitStatus` will ignore the `$?` variable
+  > - `-IgnoreExitCode` will ignore any exit-codes.    The ignored exit-code is available through `$LASTIGNOREDEXITCODE`.
+  > - `-IgnoreExitCodes "40, 41, 42"` will ignore a set of exit-codes, but still catch any other exit-codes.  The list of exit-codes has to be a string with comma-separated or space-separated exit-codes.  The ignored exit-code is available through `$LASTIGNOREDEXITCODE`.
+
+To illustrate the second solution
+```powershell
+#
+# Intro-1.ps1
+#
+
+$STEPS_LOG_FILE = "./intro-1.log"
+
+. ./.steps.ps1
+trap { do_trap }
+
+do_script
+
+#
+do_step "do something"
+
+Write-Output "doing something"
+
+#
+do_step "do something else"
+
+$ErrorActionPreference = 'Continue'
+cmd /c "echo 'my-status'>&2 & echo 'my-output'"; do_catch_exit -IgnoreExitStatus   # <<<<<<<<<<
+$ErrorActionPreference = 'Stop'
+
+#
+do_step "do final thing"
+
+Write-Output "doing final thing"
+
+#
+do_exit 0
+```
+
+![intro-1.colors.png](./screenshots/intro-1.stderr-solved-3.png)
