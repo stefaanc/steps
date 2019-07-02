@@ -293,11 +293,14 @@ function do_catch_exit {
             $global:LASTEXITCOMMAND = $command
             $global:LASTEXITLINENO = $lineno
             $global:LASTEXITCHARNO = $charno
-            $global:LASTEXITMESSAGE = "caught exitcode $exitcode"
-
-            if ( "$exitstatus" -eq "0" ) {   # -and ( "$exitstatus" -eq "False" )
+            if ( "$exitcode" -eq "0" ) {   # -and ( "$exitstatus" -eq "False" )
                 $exitcode = -99999
-                cmd /c "exit -99999"   # set correct $LASTEXITCODE
+                cmd /c "exit $exitcode"   # set correct $LASTEXITCODE
+
+                $global:LASTEXITMESSAGE = "caught execution status $false, with exitcode 0"
+            }
+            else {
+                $global:LASTEXITMESSAGE = "caught exitcode $exitcode"
             }
 
             throw $LASTEXITMESSAGE
