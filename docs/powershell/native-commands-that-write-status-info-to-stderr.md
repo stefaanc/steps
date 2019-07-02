@@ -61,6 +61,7 @@ The powershell error is non-terminating.  However, since STEPS always sets `$Err
 There are a couple of things we can do to solve this behaviour:
 - [Capture the error in a try-catch statement](#capture-the-error-in-a-try-catch-statement)
 - [Temporarily set `$ErrorActionPreference = 'Continue'`](#temporarily-set-erroractionpreference--continue)
+- [Run the command in a script-block](#run-the-command-in-a-script-block)
 
 <br/>
 
@@ -369,3 +370,51 @@ do_exit 0
 ```
 
 ![intro-1.colors.png](./screenshots/intro-1.stderr-solved-3.png)
+
+<br/>
+
+### Run the command in a script-block
+
+As a variation on the previous solution, we can also run the native command in a script-block with relaxed error-action preference
+
+```powershell
+#
+# Intro-1.ps1
+#
+
+$STEPS_LOG_FILE = "./intro-1.log"
+
+. ./.steps.ps1
+trap { do_trap }
+
+do_script
+
+#
+do_step "do something"
+
+Write-Output "doing something"
+
+#
+do_step "do something else"
+
+& {                                                   # <<<<<<<<<<<<<<<<<<<<<<<<<
+    $ErrorActionPreference = 'Continue'               # <<<<<<<<<<<<<<<<<<<<<<<<<
+    cmd /c "echo 'my-status'>&2 & echo 'my-output'"   # <<<<<<<<<<<<<<<<<<<<<<<<<
+}; do_catch_exit                                      # <<<<<<<<<<<<<<<<<<<<<<<<<
+
+#
+do_step "do final thing"
+
+Write-Output "doing final thing"
+
+#
+do_exit 0
+```
+
+- `$ErrorActionPreference = 'Continue'` makes sure we don't capture non-terminating errors inside the script-block.
+- Remark that compared to the previous solution.
+  - we don't need to restore `$ErrorActionPreference = 'Stop'`
+  - we don't need to encapsulate the command in `()` or to use the option `-IgnoreExitStatus` for `do_catch_exit`
+
+> :bulb:
+> Remark that you can also use `{}` instead of `&{}`.  This way the non-terminating error will not be added to the `$Error` array.  However, that means you cannot get to the status-info from the command in any way, other than looking in the log-file.
