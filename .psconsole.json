@@ -1,4 +1,6 @@
 {
+    "Font": "Consolas",
+    "FontSize": 12,
     "UserColorScheme": {
         "StreamOutputForegroundColor": "Gray",
         "StreamOutputBackgroundColor": "Black",
