@@ -1,6 +1,6 @@
 {
-    "Font": "Consolas",
-    "FontSize": 12,
+    "Font": "Lucida Console",
+    "FontSize": 14,
     "UserColorScheme": {
         "StreamOutputForegroundColor": "Gray",
         "StreamOutputBackgroundColor": "Black",
