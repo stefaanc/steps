@@ -11,5 +11,5 @@ if ( -not ( Get-Location ).Path.StartsWith("$ROOT") ) {
 Apply-PSConsoleSettings "STEPS"
 
 $e = [char]27
-$env:STEPS_COLORS = "$e[38;5;45m,$e[92m,$e[93m,$e[91m,$e[0m"
-#                    normal     ,green ,yellow,red   ,reset
+$env:STEPS_COLORS = "$e[33m,$e[96m,$e[92m,$e[93m,$e[91m,$e[0m"
+#                    normal,bright,green ,yellow,red   ,reset
