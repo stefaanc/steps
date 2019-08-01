@@ -49,7 +49,7 @@ if [[ "$STEPS_STAGE" = "" ]] ; then
     export STEPS_LOG_FILE="$STEPS_LOG_FILE"
     set -u
     if [[ "$STEPS_LOG_FILE" = "" ]] ; then
-        exec 2> >( tee "./_stderr.log" ) 111>/dev/null
+        exec 111>/dev/null 2> >( tee "./_stderr.log" )
     else
         logpath="$( dirname $STEPS_LOG_FILE )"
         if [[ $logpath ]] ; then
@@ -60,9 +60,9 @@ if [[ "$STEPS_STAGE" = "" ]] ; then
         export STEPS_LOG_APPEND="$STEPS_LOG_APPEND"
         set -u
         if [[ "$STEPS_LOG_APPEND" = "" ]] ; then
-            exec 2> >( tee "./_stderr.log" ) 111>&1 1> $STEPS_LOG_FILE
+            exec 111>&1 1> $STEPS_LOG_FILE 2> >( tee "./_stderr.log" )
         else
-            exec 2> >( tee "./_stderr.log" ) 111>&1 1>> $STEPS_LOG_FILE
+            exec 111>&1 1>> $STEPS_LOG_FILE 2> >( tee "./_stderr.log" )
         fi
     fi
 else
@@ -223,7 +223,7 @@ do_trap () {
             :   # noop
         elif [[ "$( tail -n 1 "./_stderr.log" 2>/bin/null | grep ': line [0-9]*: ' )" != "" ]] ; then 
             # called via direct EXIT trap, with error-message
-            echo '##### 2' #>&111     # for debugging
+            #echo '##### 2' #>&111     # for debugging
             global LASTEXITSCRIPT="$( tail -n 1 "./_stderr.log" | sed -e 's|: .*||' )"
             global LASTEXITCOMMAND="$command"
             global LASTEXITLINENO="$( tail -n 1 "./_stderr.log" | sed -e 's|.*: line ||' -e 's|: .*||' )"
