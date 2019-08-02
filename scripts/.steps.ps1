@@ -362,7 +362,7 @@ function do_trap {
             }
         }
 
-        $text = "ERROR: $exitcode, line: $lineno, char: $charno, cmd: '$( "$command".Replace("'", "`'") )' > `"$( "$message".Replace('"', '`"') )`""
+        $text = "ERROR: $exitcode, script: $script, line: $lineno, char: $charno, cmd: '$( "$command".Replace("'", "`'") )' > `"$( "$message".Replace('"', '`"') )`""
 
         Write-Information "${R}${STEPS_INDENT}$text${X}"
         Write-Information "${N}${STEPS_PREVIOUS_INDENT}${X}"
