@@ -181,8 +181,13 @@ do_exit () {
         local lineno="${BASH_LINENO[1]}"   # this always will be '0' when trapped in 'main'
         if [[ $lineno = "0" ]] ; then local lineno="--" ; fi
         global LASTEXITLINENO=$lineno
-        global LASTEXITCOMMAND="do_exit $exitcode"
-        global LASTEXITMESSAGE="exited with exitcode $exitcode"
+        if [[ "$2" != "" ]] ; then
+            global LASTEXITCOMMAND="do_exit $exitcode \"$2\""
+            global LASTEXITMESSAGE="$2"
+        else
+            global LASTEXITCOMMAND="do_exit $exitcode"
+            global LASTEXITMESSAGE="exited with exitcode $exitcode"
+        fi
     elif [[ "$( tail -n 1 "./_stderr.log" 2>/bin/null | grep ': line [0-9]*: ' )" != "" ]] ; then 
         # called via ERR trap, with error-message
         #echo '##### 2' #>&111     # for debugging

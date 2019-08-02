@@ -39,6 +39,7 @@ echo "generating an error using 'exit'"
 #echo "xxx"; do_exit 42 | xargs printf "%s\n"
 #echo "xxx"; do_exit 42 > _test.log
 #echo "xxx"; do_exit 42; echo "yyy"
+do_exit 42 "this is an error"
 
 #
 do_step "handle a command returning an 'error'"
