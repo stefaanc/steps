@@ -8,6 +8,8 @@ if (( $# > 2 )) ; then STEPS_COLORS="$3" ; fi       # used in './.steps.sh'
 
 . "$( dirname ${BASH_SOURCE[0]} )/.steps.bash"
 
+do_cleanup 'do_echo "### cleaning up 1 ###"'
+
 do_script
 
 #

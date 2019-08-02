@@ -10,6 +10,8 @@ set -eu -o pipefail -o errtrace
 
 . "$( dirname ${BASH_SOURCE[0]} )/.globals.bash"
 
+STEPS_CLEANUP=""
+
 set +u   # disable checking for undefined vars
 export STEPS_COLORS="$STEPS_COLORS"
 set -u
@@ -169,10 +171,15 @@ do_reset () {
     global LASTEXITTRAPPED=""
 }
 
+do_cleanup () {
+    #echo '##### do_cleanup' #>&111     # for debugging
+    STEPS_CLEANUP=$1
+}
+
 do_exit () {
     local exitcode=$1
     local command="$BASH_COMMAND"   # capture command here so not overwritten by the code in this function
-    #echo '##### do_exit' #>&111     # for debugging
+    #echo '##### do_exit' >&111     # for debugging
 
     if [[ $exitcode != 99999 ]] ; then 
         # called directly
@@ -181,7 +188,7 @@ do_exit () {
         local lineno="${BASH_LINENO[1]}"   # this always will be '0' when trapped in 'main'
         if [[ $lineno = "0" ]] ; then local lineno="--" ; fi
         global LASTEXITLINENO=$lineno
-        if [[ "$2" != "" ]] ; then
+        if [[ ( $# -gt 1 ) && ( "$2" != "" ) ]] ; then
             global LASTEXITCOMMAND="do_exit $exitcode \"$2\""
             global LASTEXITMESSAGE="$2"
         else
@@ -232,7 +239,7 @@ do_exit () {
 do_trap () {
     local exitcode=$?
     local command="$BASH_COMMAND"   # capture command here so not overwritten by the code in this function
-    #echo '##### do_trap' #>&111     # for debugging
+    #echo '##### do_trap' >&111     # for debugging
 
     if [[ "$LASTEXITTRAPPED" = "" ]] ; then
         if [[ "$LASTEXITLINENO" != "" ]] ; then 
@@ -255,6 +262,10 @@ do_trap () {
             if [[ "$lineno" = "0" ]] ; then local lineno="--" ; fi
             global LASTEXITLINENO=$lineno
             global LASTEXITMESSAGE="exited with exitcode $exitcode"
+        fi
+
+        if [[ "$STEPS_CLEANUP" != "" ]] ; then
+            eval "$STEPS_CLEANUP"
         fi
 
         if [[ $exitcode = 0 ]] ; then
@@ -282,6 +293,10 @@ do_trap () {
         rm -f "./_stderr.log" # cleanup 'tee'd file
 
         global LASTEXITCODE=$exitcode
+    else
+        if [[ "$STEPS_CLEANUP" != "" ]] ; then
+            eval "$STEPS_CLEANUP"
+        fi
     fi
 
     #echo "##### [[ \$LASTEXITCODE = $LASTEXITCODE ]]" #>&111     # for debugging

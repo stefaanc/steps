@@ -28,6 +28,8 @@ if ( "$STEPS_STAGE" -eq "" ) {
     $STEPS_STAGE = "init"
     # Write-Host "${N}##### `$STEPS_STAGE -eq '$STEPS_STAGE'${X}"   # for debugging
 
+    $STEPS_CLEANUP = ""
+
     $STEPS_SCRIPT = $script:MyInvocation.PSCommandPath
     if ( !(Get-Variable -Name "STEPS_PARAMS" -ErrorAction 'Ignore') ) {
         $STEPS_PARAMS = $PSBoundParameters
@@ -53,6 +55,8 @@ elseif ( "$STEPS_STAGE" -eq "init" ) {
     $STEPS_STAGE = "root"
     # Write-Host "${N}##### `$STEPS_STAGE -eq '$STEPS_STAGE'${X}"   # for debugging
 
+    # don't define '$STEPS_CLEANUP' - this would override the value when 'do_cleanup' is called before 'do_script'
+
     $STEPS_INDENT = ""
     $STEPS_PREVIOUS_INDENT = $STEPS_INDENT
 
@@ -64,6 +68,8 @@ else {
 
     $STEPS_STAGE = "branch"
     # Write-Host "${N}##### `$STEPS_STAGE -eq '$STEPS_STAGE'${X}"   # for debugging
+
+    $STEPS_CLEANUP = ""
 
     Write-Information "${N}${STEPS_INDENT}${X}"   # add a blank line to start a new scope
 
@@ -221,6 +227,14 @@ function do_reset {
     $Error.Clear()
 }
 
+function do_cleanup {
+    param (
+        [string]$code
+    )
+    # Write-Host "${N}##### do_cleanup${X}"   # for debugging
+    $script:STEPS_CLEANUP = "$code"
+}
+
 function do_exit {
     param (
         [int]$exitcode,
@@ -236,6 +250,10 @@ function do_exit {
         Write-Output ""
         Write-Output "# $( "=" * 30 )"
         Write-Output ""
+
+        if ( "$STEPS_CLEANUP" -ne "" ) {
+            Invoke-Expression "$STEPS_CLEANUP"
+        }
 
         exit 0
     }
@@ -362,6 +380,10 @@ function do_trap {
             }
         }
 
+        if ( "$STEPS_CLEANUP" -ne "" ) {
+            Invoke-Expression "$STEPS_CLEANUP"
+        }
+
         $text = "ERROR: $exitcode, script: $script, line: $lineno, char: $charno, cmd: '$( "$command".Replace("'", "`'") )' > `"$( "$message".Replace('"', '`"') )`""
 
         Write-Information "${R}${STEPS_INDENT}$text${X}"
@@ -378,6 +400,11 @@ function do_trap {
         }
 
         $global:LASTEXITTRAPPED = $true
+    }
+    else {
+        if ( "$STEPS_CLEANUP" -ne "" ) {
+            Invoke-Expression "$STEPS_CLEANUP"
+        }
     }
 
     throw $Error[0].Exception   # propagate exception

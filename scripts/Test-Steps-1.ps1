@@ -10,6 +10,8 @@ param (
 . "$(Split-Path -Path $script:MyInvocation.MyCommand.Path)\.steps.ps1"
 trap { do_trap }
 
+do_cleanup 'do_echo "### cleaning up 1 ###"'
+
 do_script
 
 #

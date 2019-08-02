@@ -5,6 +5,8 @@
 . "$(Split-Path -Path $script:MyInvocation.MyCommand.Path)\.steps.ps1"
 trap { do_trap }
 
+do_cleanup 'do_echo "### cleaning up 2 ###"'
+
 do_script
 
 #
@@ -46,7 +48,7 @@ Write-Output "generating an error using 'do_exit'"
 #echo "xxx"; do_exit 42 | Out-Null
 #echo "xxx"; do_exit 42 > _test.log
 #echo "xxx"; do_exit 42; echo "yyy"
-do_exit 42 "this is an error"
+#do_exit 42 "this is an error"
 
 #
 do_step "handle a command using 'do_catch_exit'"
