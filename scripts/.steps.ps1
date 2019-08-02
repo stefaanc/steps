@@ -30,7 +30,7 @@ if ( "$STEPS_STAGE" -eq "" ) {
 
     $STEPS_SCRIPT = $script:MyInvocation.PSCommandPath
     if ( !(Get-Variable -Name "STEPS_PARAMS" -ErrorAction 'Ignore') ) {
-        $STEPS_PARAMS = @{}
+        $STEPS_PARAMS = $PSBoundParameters
     }
     if ( !(Get-Variable -Name "STEPS_LOG_FILE" -ErrorAction 'Ignore') ) {
         $STEPS_LOG_FILE = $env:STEPS_LOG_FILE

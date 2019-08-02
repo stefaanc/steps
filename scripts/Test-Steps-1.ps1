@@ -7,12 +7,6 @@ param (
     [Parameter(Position=2)][string]$STEPS_COLORS        # for '.steps.ps1'
 )
 
-$STEPS_PARAMS = @{
-    STEPS_LOG_FILE = "$STEPS_LOG_FILE"
-    STEPS_LOG_APPEND = "$STEPS_LOG_APPEND"
-    STEPS_COLORS = "$STEPS_COLORS"
-}
-
 . "$(Split-Path -Path $script:MyInvocation.MyCommand.Path)\.steps.ps1"
 trap { do_trap }
 
