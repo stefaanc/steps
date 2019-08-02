@@ -4,7 +4,7 @@
 param (
     [Parameter(Position=0)][string]$STEPS_LOG_FILE,     # for '.steps.ps1'
     [Parameter(Position=1)][string]$STEPS_LOG_APPEND,   # for '.steps.ps1'
-    [Parameter(Position=2)][string]$STEPS_COLORS        # for '.steps.ps1'
+    [Parameter(Position=2)][string]$STEPS_COLORS = $env:STEPS_COLORS   # for '.steps.ps1'
 )
 
 . "$(Split-Path -Path $script:MyInvocation.MyCommand.Path)\.steps.ps1"

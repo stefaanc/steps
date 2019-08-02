@@ -27,10 +27,8 @@ for ($i = 1; $i -le 3; $i++) {
 do_step "use 'do_echo' with color option"
 
 Write-Output "using 'do_echo' with color option"
-$e = [char]27
-$Color = "$e[93m"
 for ($i = 1; $i -le 3; $i++) {
-    do_echo -Color $Color "waiting"
+    do_echo -ForegroundColor "Yellow" -BackgroundColor "Red" "waiting"
     Start-Sleep 1
 }
 

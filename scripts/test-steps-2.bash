@@ -28,7 +28,7 @@ do_step "use 'do_echo' with color option"
 
 echo "using 'do_echo' with color option"
 for i in `seq 1 3`; do
-    do_echo --color '\e[93m' forever waiting
+    do_echo --foregroundcolor 'Red' --backgroundcolor 'Yellow' forever waiting
     sleep 1
 done
 

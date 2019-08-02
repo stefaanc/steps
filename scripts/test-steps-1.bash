@@ -6,6 +6,8 @@ if (( $# > 0 )) ; then STEPS_LOG_FILE="$1" ; fi     # used in './.steps.sh'
 if (( $# > 1 )) ; then STEPS_LOG_APPEND="$2" ; fi   # used in './.steps.sh'
 if (( $# > 2 )) ; then STEPS_COLORS="$3" ; fi       # used in './.steps.sh'
 
+STEPS_COLORS="DarkYellow,Magenta,Green,Yellow,Red"
+
 . "$( dirname ${BASH_SOURCE[0]} )/.steps.bash"
 
 do_cleanup 'do_echo "### cleaning up 1 ###"'

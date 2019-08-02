@@ -8,18 +8,87 @@
 #[Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSAvoidGlobalVars')]       # !!! NEEDS WORK !!!
 #[Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSAvoidUsingWriteHost')]   # !!! NEEDS WORK !!!
 
+$e = [char]27
+$VTForegroundColors = @{
+    Black = "30"
+    DarkBlue = "34"
+    DarkGreen = "32"
+    DarkCyan = "36"
+    DarkRed = "31"
+    DarkMagenta = "35"
+    DarkYellow = "33"
+    Gray = "37"
+    DarkGray = "90"
+    Blue = "94"
+    Green = "92"
+    Cyan = "96"
+    Red = "91"
+    Magenta = "95"
+    Yellow = "93"
+    White = "97"
+}
+$VTBackgroundColors = @{
+    Black = "40"
+    DarkBlue = "44"
+    DarkGreen = "42"
+    DarkCyan = "46"
+    DarkRed = "41"
+    DarkMagenta = "45"
+    DarkYellow = "43"
+    Gray = "47"
+    DarkGray = "100"
+    Blue = "104"
+    Green = "102"
+    Cyan = "106"
+    Red = "101"
+    Magenta = "105"
+    Yellow = "103"
+    White = "107"
+}
+
+function ConvertColorToEsc {
+    param(
+        [Parameter(Position = 0, Mandatory = $true)][Alias("Color")][string]$ForegroundColor,
+        [Parameter(Position = 1)][string]$BackgroundColor
+    )
+
+    $f = "$ForegroundColor".Substring(0,1)
+    if ( $f -eq [char]27 ) {
+        $c = "$ForegroundColor"
+    }
+    elseif ( $f -eq "#" ) {
+        $c = "$e[38;2" +
+            ";$( [Convert]::ToInt32("$ForegroundColor".Substring(1,2),16) )" +
+            ";$( [Convert]::ToInt32("$ForegroundColor".Substring(3,2),16) )" +
+            ";$( [Convert]::ToInt32("$ForegroundColor".Substring(5,2),16) )" +
+            "m"
+    }
+    else {
+        $c = "$e[$( $VTForegroundColors.$ForegroundColor )"
+        if ( "$BackgroundColor" -ne "" ) {
+            $c = $c + ";$( $VTBackgroundColors.$BackgroundColor )"
+        }
+        $c = $c + "m"
+    }
+
+    return $c
+}
+
 if ( !(Get-Variable -Name "STEPS_COLORS" -ErrorAction 'Ignore') ) {
     $STEPS_COLORS = $env:STEPS_COLORS
 }
 if ( "$STEPS_COLORS" -eq "" ) {
-    $e = [char]27
+    #normal      ; bright       ; green        ; yellow       ; red          ; reset
     ${N}="$e[33m"; ${B}="$e[96m"; ${G}="$e[92m"; ${Y}="$e[93m"; ${R}="$e[91m"; ${X}="$e[0m"
-    #     normal ;       bright;       green  ;       yellow ;       red    ;       reset
 }
 else {
     $COLORS = "$STEPS_COLORS".Split(",")
-    ${N}=$COLORS[0]; ${B}=$COLORS[1]; ${G}=$COLORS[2]; ${Y}=$COLORS[3]; ${R}=$COLORS[4]; ${X}=$COLORS[5];
-    #    normal      ;    green  ;         yellow ;         red    ;         reset
+    ${N}=ConvertColorToEsc $COLORS[0]
+    ${B}=ConvertColorToEsc $COLORS[1]
+    ${G}=ConvertColorToEsc $COLORS[2]
+    ${Y}=ConvertColorToEsc $COLORS[3]
+    ${R}=ConvertColorToEsc $COLORS[4]
+    ${X}="$e[0m"
 }
 
 if ( "$STEPS_STAGE" -eq "" ) {
@@ -182,7 +251,7 @@ function do_script {
 }
 
 function do_step {
-    param (
+    param(
         [string]$description
     )
     # Write-Host "${N}##### do_step${X}"   # for debugging
@@ -200,12 +269,16 @@ function do_step {
 }
 
 function do_echo {
-    param (
-        [Alias("ForegroundColor","c")][string]$Color = ${B},
+    param(
+        [Alias("Color","c")][string]$ForegroundColor = ${B},
+        [string]$BackgroundColor,
         [Parameter(Position = 0, ValueFromPipeline = $true)][string]$message
     )
     # Write-Host "${N}##### do_echo${X}"   # for debugging
 
+    begin {
+        $Color = ConvertColorToEsc $ForegroundColor $BackgroundColor
+    }
     process {
         "$message".Replace("`r`n", "`n").Split("`n") | foreach-object {
             $line = "$_".TrimEnd()
@@ -228,7 +301,7 @@ function do_reset {
 }
 
 function do_cleanup {
-    param (
+    param(
         [string]$code
     )
     # Write-Host "${N}##### do_cleanup${X}"   # for debugging
@@ -236,7 +309,7 @@ function do_cleanup {
 }
 
 function do_exit {
-    param (
+    param(
         [int]$exitcode,
         [string]$message
     )
