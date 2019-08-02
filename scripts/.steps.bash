@@ -134,6 +134,31 @@ do_step () {
     fi
 }
 
+do_echo () {
+    local message=${@:-$(</dev/stdin)}
+    #echo '##### do_echo' #>&111     # for debugging
+
+    local color=${B}
+    if [[ $# -gt 1 ]] ; then
+        while [[ $1 ]] ; do
+            case "$1" in
+                -c | --color | --foregroundcolor)
+                    local color=$2; shift ;;
+                *)
+                    local message=$@; break ;;
+            esac
+            shift
+        done
+    fi
+
+    OLDIFS=$IFS; IFS=$'\n'
+    while read -r line ; do
+        echo -e "${color}${STEPS_INDENT}.   $line${X}" >&111
+        echo "# $line"
+    done <<< "$message"
+    IFS=$OLDIFS
+}
+
 do_reset () {
     #echo '##### do_reset' #>&111     # for debugging
     global LASTEXITCODE=0
@@ -142,18 +167,6 @@ do_reset () {
     global LASTEXITLINENO=""
     global LASTEXITMESSAGE=""
     global LASTEXITTRAPPED=""
-}
-
-do_echo () {
-    message=${1:-$(</dev/stdin)}
-    #echo '##### do_echo' #>&111     # for debugging
-
-    OLDIFS=$IFS; IFS=$'\n'
-    while read -r line ; do
-        echo -e "${B}${STEPS_INDENT}.   $line${X}" >&111
-        echo "# $line"
-    done <<< "$message"
-    IFS=$OLDIFS
 }
 
 do_exit () {

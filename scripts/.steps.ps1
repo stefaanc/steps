@@ -195,15 +195,15 @@ function do_step {
 
 function do_echo {
     param (
-        [Parameter(Position = 0, ValueFromPipeline = $true)]
-        [string]$message
+        [Alias("ForegroundColor","c")][string]$Color = ${B},
+        [Parameter(Position = 0, ValueFromPipeline = $true)][string]$message
     )
     # Write-Host "${N}##### do_echo${X}"   # for debugging
 
     process {
         "$message".Replace("`r`n", "`n").Split("`n") | foreach-object {
             $line = "$_".TrimEnd()
-            Write-Information "${B}${STEPS_INDENT}.   $line${X}"
+            Write-Information "${Color}${STEPS_INDENT}.   $line${X}"
             Write-Output "# $line"
         }
     }
@@ -302,7 +302,7 @@ function do_catch_exit {
             $global:LASTEXITLINENO = $lineno
             $global:LASTEXITCHARNO = $charno
             if ( "$exitcode" -eq "0" ) {   # -and ( "$exitstatus" -eq "False" )
-                $exitcode = -99999
+                $exitcode = 255
                 cmd /c "exit $exitcode"   # set correct $LASTEXITCODE
 
                 $global:LASTEXITMESSAGE = "caught execution status $false, with exitcode 0"
