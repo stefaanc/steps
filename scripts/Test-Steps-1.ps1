@@ -2,9 +2,10 @@
 # more info: https://github.com/stefaanc/steps
 #
 param (
-    [Parameter(Position=0)][string]$STEPS_LOG_FILE,     # for '.steps.ps1'
-    [Parameter(Position=1)][string]$STEPS_LOG_APPEND,   # for '.steps.ps1'
-    [Parameter(Position=2)][string]$STEPS_COLORS = $env:STEPS_COLORS   # for '.steps.ps1'
+    [Parameter(Position=1)][string]$STEPS_LOG_FILE,     # for '.steps.ps1'
+    [Parameter(Position=2)][string]$STEPS_LOG_APPEND,   # for '.steps.ps1'
+    [Parameter(Position=3)][string]$STEPS_COLORS = $env:STEPS_COLORS,   # for '.steps.ps1'
+    [string]$Parameter
 )
 
 . "$(Split-Path -Path $script:MyInvocation.MyCommand.Path)\.steps.ps1"
@@ -13,6 +14,11 @@ trap { do_trap }
 do_cleanup 'do_echo "### cleaning up 1 ###"'
 
 do_script
+
+#
+do_step "test parameter"
+
+do_echo "`$Parameter = $Parameter"
 
 #
 do_step "do something"
