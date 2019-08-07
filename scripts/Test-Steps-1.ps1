@@ -2,9 +2,9 @@
 # more info: https://github.com/stefaanc/steps
 #
 param (
-    [Parameter(Position=1)][string]$STEPS_LOG_FILE,     # for '.steps.ps1'
-    [Parameter(Position=2)][string]$STEPS_LOG_APPEND,   # for '.steps.ps1'
-    [Parameter(Position=3)][string]$STEPS_COLORS = $env:STEPS_COLORS,   # for '.steps.ps1'
+    [string]$STEPS_LOG_FILE,     # for '.steps.ps1'
+    [string]$STEPS_LOG_APPEND,   # for '.steps.ps1'
+    [string]$STEPS_COLORS = $env:STEPS_COLORS,   # for '.steps.ps1'
     [string]$Parameter
 )
 
