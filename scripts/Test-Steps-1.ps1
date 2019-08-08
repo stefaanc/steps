@@ -9,7 +9,7 @@ param (
 )
 
 . "$(Split-Path -Path $script:MyInvocation.MyCommand.Path)\.steps.ps1"
-trap { do_trap }
+trap { do_trap $_ }
 
 do_cleanup 'do_echo "### cleaning up 1 ###"'
 
@@ -58,10 +58,24 @@ Write-Output "generating an error using 'do_exit'"
 #echo "xxx"; do_exit 42; echo "yyy"
 
 #
+do_step "generate an error using 'notvalid'"
+
+Write-Output "generating an error using 'notvalid'"
+#notvalid
+
+#
+do_step "generate an error using 'Write-Error'"
+
+Write-Output "generating an error using 'Write-Error'"
+#Write-Error "my-error"             # doesn't report error-line/lineno correctly
+#function test_write { Write-Error "my-error" } ; test_write
+
+#
 do_step "generate an error using 'throw'"
 
 Write-Output "generating an error using 'throw'"
 #throw "my error"
+#function test_throw { throw "my-error" } ; test_throw
 #throw 42
 #echo "xxx"; throw 42; echo "yyy"
 
