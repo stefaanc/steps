@@ -1,6 +1,6 @@
 ## Native Commands That Write Status-Info To stderr
 
-Some native commands, like `curl` or `openssl`, write status-info to the standard error stream (`stderr`).  When the standard output stream (`stdout`) is used for output that is typically captured in a file or piped to another command, then one of the only two ways a native command can provide extra information without polluting the standard output, is to write to the error stream (the second way is for the native command to use the exit-code to return a status-indication).
+Some native commands, like `curl`, `putty` or `openssl`, write status-info to the standard error stream (`stderr`).  When the standard output stream (`stdout`) is used for output that is typically captured in a file or piped to another command, then one of the only two ways a native command can provide extra information without polluting the standard output, is to write to the error stream (the second way is for the native command to use the exit-code to return a status-indication).
 
 Let's write a script to simulate this
 
@@ -24,7 +24,7 @@ Write-Output "doing something"
 #
 do_step "do something else"
 
-( cmd /c "echo 'my-status'>&2" ); do_catch_exit   # <<<<<<<<<<<<<<<<<<<<<<<<<<<<
+( cmd /c "echo 'my-status' >&2" ); do_catch_exit   # <<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 #
 do_step "do final thing"
@@ -35,7 +35,7 @@ Write-Output "doing final thing"
 do_exit 0
 ```
 
-- `cmd /c "echo 'my-status'>&2"` writes a status message to `stderr`
+- `cmd /c "echo 'my-status' >&2"` writes a status message to `stderr`
 - `do_catch_exit` is the way you would typically catch error exits from a native command
 
 When we execute this in a powershell, then we get
@@ -89,7 +89,7 @@ Write-Output "doing something"
 #
 do_step "do something else"
 
-try { ( cmd /c "echo 'my-status'>&2" ) } catch { do_continue }; do_catch_exit   # <<<<<<<<<<
+try { ( cmd /c "echo 'my-status' >&2" ) } catch { do_continue }; do_catch_exit   # <<<<<<<<<<
 
 #
 do_step "do final thing"
@@ -209,7 +209,7 @@ Write-Output "doing something"
 do_step "do something else"
 
 $ErrorActionPreference = 'Continue'   # <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-( cmd /c "echo 'my-status'>&2 & echo 'my-output'" ); do_catch_exit
+( cmd /c "echo 'my-status' >&2 & echo 'my-output'" ); do_catch_exit
 $ErrorActionPreference = 'Stop'       # <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 #
@@ -261,7 +261,7 @@ doing something
 
 cmd : 'my-status' 
 At C:\Users\stefaanc\Projects\steps\playground\intro-1.ps1:21 char:3
-+ ( cmd /c "echo 'my-status'>&2 & echo 'my-output'" ); do_catch_exit
++ ( cmd /c "echo 'my-status' >&2 & echo 'my-output'" ); do_catch_exit
 +   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     + CategoryInfo          : NotSpecified: ('my-status' :String) [], RemoteException
     + FullyQualifiedErrorId : NativeCommandError
@@ -304,7 +304,7 @@ Write-Output "doing something"
 do_step "do something else"
 
 $ErrorActionPreference = 'Continue'
-cmd /c "echo 'my-status'>&2 & echo 'my-output'"; do_catch_exit   # <<<<<<<<<<<<<
+cmd /c "echo 'my-status' >&2 & echo 'my-output'"; do_catch_exit   # <<<<<<<<<<<<<
 $ErrorActionPreference = 'Stop'
 
 #
@@ -322,7 +322,7 @@ Running this gives
 
 ![intro-1.colors.png](./screenshots/intro-1.stderr-no-parentheses.png)
 
-- The reason is that, although we made the error non-terminating, the `$?` variable still returns `False`, meaning that the command failed.  
+- The reason is that, although we made the error non-terminating, the `$?` variable still returns `False`, meaning that the command failed.  Hence it is picked up by the `do_catch_exit` function, which throws a second error - now terminating.
   By encapsulating the command in parentheses, the closing parenthesis behaves like a separate command and sets the `$?` variable to `True`, meaning that this command successfully completed.
 
 Solutions to the problem are:
@@ -415,6 +415,3 @@ do_exit 0
 - Remark that compared to the previous solution.
   - we don't need to restore `$ErrorActionPreference = 'Stop'`
   - we don't need to encapsulate the command in `()` or to use the option `-IgnoreExitStatus` for `do_catch_exit`
-
-> :bulb:
-> Remark that you can also use `{}` instead of `&{}`.  This way the non-terminating error will not be added to the `$Error` array.  However, that means you cannot get to the status-info from the command in any way, other than looking in the log-file.

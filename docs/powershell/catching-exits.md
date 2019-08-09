@@ -64,6 +64,15 @@ doing something
 
 
 #
-# ERROR: 42, line: 19, char: 19, cmd: 'do_catch_exit' > "caught exitcode 42"
+# ERROR: 42, line: 20, char: 19, cmd: 'do_catch_exit' > "caught exitcode 42"
 #
+
+##############################
+at do_catch_exit, C:\Users\stefaanc\projects\steps\playground\.steps.ps1: line 411
+at <ScriptBlock>, C:\Users\stefaanc\projects\steps\playground\intro-1.ps1: line 20
+at do_exec, C:\Users\stefaanc\projects\steps\playground\.steps.ps1: line 190
+at do_script, C:\Users\stefaanc\projects\steps\playground\.steps.ps1: line 208
+at <ScriptBlock>, C:\Users\stefaanc\projects\steps\playground\intro-1.ps1: line 10
+at <ScriptBlock>, <No file>: line 1
+##############################
 ```

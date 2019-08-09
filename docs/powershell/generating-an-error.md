@@ -68,11 +68,19 @@ doing something
 
 
 #
-# ERROR: 99999, line: 19, char: 1, cmd: 'throw "my-error"' > "my-error"
+# ERROR: 99999, line: 20, char: 1, cmd: 'throw "my-error"' > "my-error"
 #
 
+##############################
+at <ScriptBlock>, C:\Users\stefaanc\projects\steps\playground\intro-1.ps1: line 20
+at do_exec, C:\Users\stefaanc\projects\steps\playground\.steps.ps1: line 190
+at do_script, C:\Users\stefaanc\projects\steps\playground\.steps.ps1: line 208
+at <ScriptBlock>, C:\Users\stefaanc\projects\steps\playground\intro-1.ps1: line 10
+at <ScriptBlock>, <No file>: line 1
+##############################
+
 my-error
-At C:\Users\stefaanc\steps\playground\intro-1.ps1:19 char:1
+At C:\Users\stefaanc\steps\playground\intro-1.ps1:20 char:1
 + throw "my-error"
 + ~~~~~~~~~~~~~~~~
     + CategoryInfo          : OperationStopped: (my-error:String) [], RuntimeException

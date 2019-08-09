@@ -120,7 +120,7 @@ do_exit 0
 
 <br/>
 
-`do_echo` also supports multi-line strings
+`do_echo` also supports multi-line strings (don't copy the `# <<<<<<...` comments in your script)
 
 ```powershell
 #
