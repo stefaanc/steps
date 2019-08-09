@@ -6,6 +6,7 @@ Let's modify the basic script to throw an error
 #
 # Intro-1.ps1
 #
+
 $STEPS_LOG_FILE = ".\intro-1.log"
 
 . ./.steps.ps1

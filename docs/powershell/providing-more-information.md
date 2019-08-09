@@ -6,6 +6,7 @@ Let's modify the basic script to provide more information to the terminal.
 #
 # Intro-1.ps1
 #
+
 $STEPS_LOG_FILE = ".\intro-1.log"
 
 . ./.steps.ps1
@@ -87,6 +88,7 @@ You can also pipe to `do_echo`
 #
 # Intro-1.ps1
 #
+
 $STEPS_LOG_FILE = ".\intro-1.log"
 
 . ./.steps.ps1
@@ -126,6 +128,7 @@ do_exit 0
 #
 # Intro-1.ps1
 #
+
 $STEPS_LOG_FILE = ".\intro-1.log"
 
 . ./.steps.ps1
@@ -169,6 +172,7 @@ Finally, if you want to send the output of a powershell method to `do_echo` in t
 #
 # Intro-1.ps1
 #
+
 $STEPS_LOG_FILE = ".\intro-1.log"
 
 . ./.steps.ps1

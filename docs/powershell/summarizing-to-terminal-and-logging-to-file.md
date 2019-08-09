@@ -6,6 +6,7 @@ Let's define a log-file in our basic script
 #
 # Intro-1.ps1
 #
+
 $STEPS_LOG_FILE = ".\intro-1.log"   # <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 . ./.steps.ps1

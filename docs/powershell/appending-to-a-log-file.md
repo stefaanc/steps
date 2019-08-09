@@ -6,6 +6,7 @@ Let's modify the basic script "Intro-1.ps1", and add an option to append to the 
 #
 # Intro-1.ps1
 #
+
 $STEPS_LOG_FILE = ".\intro-1.log"
 $STEPS_LOG_APPEND = $true        # <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 

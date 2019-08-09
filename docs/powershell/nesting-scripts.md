@@ -6,6 +6,7 @@ To illustrate nested scripts, create two scripts "intro-1.ps1" and "intro-2.ps1"
 #
 # Intro-1.ps1
 #
+
 $STEPS_LOG_FILE = ".\intro-1.log"
 
 . ./.steps.ps1
