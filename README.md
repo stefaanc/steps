@@ -84,6 +84,10 @@ Copy the STEPS library into your scripts directory.  You can find it on github i
 
 ![intro-1.failed.png](./docs/powershell/screenshots/intro-1.failed.png)
 
+#### [Exiting](./docs/powershell/exiting.md)
+
+![intro-1.exiting.do_exit.png](./docs/powershell/screenshots/intro-1.exiting.do_exit.png)
+
 #### [Catching exits](./docs/powershell/catching-exits.md)
 
 ![intro-1.catch.png](./docs/powershell/screenshots/intro-1.catch.png)
@@ -104,9 +108,9 @@ Copy the STEPS library into your scripts directory.  You can find it on github i
 [**Appending to a log-file**](./docs/powershell/appending-to-a-log-file.md)  
 [**Changing colors**](./docs/powershell/changing-colors.md)
 
-### Learnings and Techniques
+### Techniques
 
-[**Using Write-Error vs Throw**](./docs/powershell/using-write-error-vs-throw.md)
+[**Using Write-Error vs Throw**](./docs/powershell/using-write-error-vs-throw.md)  
 [**Playing with scopes - A successful call**](./docs/powershell/playing-with-scopes_a-successful-call.md)  
 [**Playing with scopes - A failed call**](./docs/powershell/playing-with-scopes_a-failed-call.md)
 
