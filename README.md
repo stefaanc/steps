@@ -104,6 +104,12 @@ Copy the STEPS library into your scripts directory.  You can find it on github i
 [**Appending to a log-file**](./docs/powershell/appending-to-a-log-file.md)  
 [**Changing colors**](./docs/powershell/changing-colors.md)
 
+### Learnings and Techniques
+
+[**Using Write-Error vs Throw**](./docs/powershell/using-write-error-vs-throw.md)
+[**Playing with scopes - A successful call**](./docs/powershell/playing-with-scopes_a-successful-call.md)  
+[**Playing with scopes - A failed call**](./docs/powershell/playing-with-scopes_a-failed-call.md)
+
 ### Troubleshooting
 
 When the script cannot dot-source the STEPS library or the script fails for some reason inside the library, you will typically get some error like
@@ -135,20 +141,6 @@ To debug, comment out the `trap ( do_trap }` line in your script.  Be aware that
 
 ![intro-1.packer.failed.png](./docs/powershell/screenshots/intro-1.packer.failed.png)
 
-
-
-<br>
-
-## Learnings and Techniques
-
-### Powershell
-
-[**Playing with scopes - A successful call**](./docs/powershell/playing-with-scopes_a-successful-call.md)  
-[**Playing with scopes - A failed call**](./docs/powershell/playing-with-scopes_a-failed-call.md)
-
-### Bash
-
--
 
 
 <br>
