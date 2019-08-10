@@ -100,6 +100,10 @@ Copy the STEPS library into your scripts directory.  You can find it on github i
 
 ![intro-1.nested.png](./docs/powershell/screenshots/intro-1.nested.png)
 
+#### [Cleaning Up](./docs/powershell/cleaning-up.md)
+
+![intro-1.cleanup.png](./docs/powershell/screenshots/intro-1.cleanup.png)
+
 ### Advanced Topics
 
 [**Scripts with parameters**](./docs/powershell/scripts-with-parameters.md)  
