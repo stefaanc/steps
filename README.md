@@ -106,7 +106,7 @@ Copy the STEPS library into your scripts directory.  You can find it on github i
 
 ### Advanced Topics
 
-[**Variables and functions**](./docs/powershell/variables-and-functions.md)
+[**Variables and functions**](./docs/powershell/variables-and-functions.md)  
 [**Scripts with parameters**](./docs/powershell/scripts-with-parameters.md)  
 [**Native commands that write status-info to stderr**](./docs/powershell/native-commands-that-write-status-info-to-stderr.md)  
 [**Native commands that use exitcode for status-info**](./docs/powershell/native-commands-that-use-exitcode-for-status-info.md)  
