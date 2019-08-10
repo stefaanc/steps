@@ -114,7 +114,7 @@ Copy the STEPS library into your scripts directory.  You can find it on github i
 [**Changing colors**](./docs/powershell/changing-colors.md)
 
 ### Techniques
-
+[**Providing Information During Long-Running Native Commands**](./docs/powershell/providing-information-during-long-running-native-commands.md)  
 [**Using Write-Error vs Throw**](./docs/powershell/using-write-error-vs-throw.md)  
 [**Playing with scopes - A successful call**](./docs/powershell/playing-with-scopes_a-successful-call.md)  
 [**Playing with scopes - A failed call**](./docs/powershell/playing-with-scopes_a-failed-call.md)
