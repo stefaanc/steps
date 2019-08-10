@@ -39,4 +39,4 @@ do_exit 0
 
 When running the script, our terminal will now look something like
 
-![intro-1.failed.png](./screenshots/intro-1.no-logging.png)
+![intro-1.no-logging.png](./screenshots/intro-1.no-logging.png)

@@ -54,7 +54,7 @@ Lets compare this with the case where we use `throw` instead of `Write-Error`
 throw "my-error"                             # <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 ```
 
-![intro-1.errors.write-error.png](./screenshots/intro-1.errors.throw.png)
+![intro-1.errors.throw.png](./screenshots/intro-1.errors.throw.png)
 
 - remark that the error-message and error-record now point to the script and line where the error was thrown.
 
@@ -94,7 +94,7 @@ Write-Output "doing final thing"
 do_exit 0
 ```
 
-![intro-1.errors.write-error.png](./screenshots/intro-1.errors.function.write-error.png)
+![intro-1.errors.function.write-error.png](./screenshots/intro-1.errors.function.write-error.png)
 
 - remark that the error-message and error-record point to the script and line where the function was called - i.e. **the caller of the function** where the `Write-Error` command was executed.
 
@@ -105,7 +105,7 @@ function generate_error {                    # <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 generate_error                               # <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 ```
 
-![intro-1.errors.write-error.png](./screenshots/intro-1.errors.function.throw.png)
+![intro-1.errors.function.throw.png](./screenshots/intro-1.errors.function.throw.png)
 
 - remark that the error-message and error-record now point to the script and line where the error was thrown **inside the function**.
 
@@ -155,7 +155,7 @@ Write-Output "doing final thing"
 do_exit 0
 ```
 
-![intro-1.errors.write-error.png](./screenshots/intro-1.errors.continue.write-error.png)
+![intro-1.errors.continue.write-error.png](./screenshots/intro-1.errors.continue.write-error.png)
 
 - remark that `Write-Error` by default generates a non-terminating error, so the script continues and completes successfully (`$? -eq True`).  When you look in the log file, you will find that an error-record has been written.
 
@@ -166,7 +166,7 @@ $ErrorActionPreference = 'Continue'          # <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 throw "my-error"                             # <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 ```
 
-![intro-1.errors.write-error.png](./screenshots/intro-1.errors.continue.throw.png)
+![intro-1.errors.continue.throw.png](./screenshots/intro-1.errors.continue.throw.png)
 
 - remark that `throw` generates a terminating error, independent of the `$ErrorActionPreference` setting
 
@@ -180,4 +180,4 @@ function my_function {                           # <<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 my_function                                      # <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 ```
 
-![intro-1.errors.write-error.png](./screenshots/intro-1.errors.continue.write-error-with-stop.png)
+![intro-1.errors.continue.write-error-with-stop.png](./screenshots/intro-1.errors.continue.write-error-with-stop.png)

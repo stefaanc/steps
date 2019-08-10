@@ -118,7 +118,7 @@ Write-Output "doing final thing"
 do_exit 0
 ```
 
-![intro-1.information.png](./screenshots/intro-1.information-piped.png)
+![intro-1.information-piped.png](./screenshots/intro-1.information-piped.png)
 
 <br/>
 
@@ -161,7 +161,7 @@ Write-Output "doing final thing"
 do_exit 0
 ```
 
-![intro-1.information.png](./screenshots/intro-1.information-multi-line.png)
+![intro-1.information-multi-line.png](./screenshots/intro-1.information-multi-line.png)
 
 <br/>
 
@@ -203,4 +203,4 @@ do_exit 0
 - `Format-Table` formats the output into a table format
 - `Out-String` converts the table-object into strings that `do_echo` can process
 
-![intro-1.information.png](./screenshots/intro-1.information-table.png)
+![intro-1.information-table.png](./screenshots/intro-1.information-table.png)

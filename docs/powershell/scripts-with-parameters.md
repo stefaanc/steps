@@ -42,7 +42,7 @@ do_exit 0
 
 The result will be
 
-![intro-1.colors.png](./screenshots/intro-1.params-ok.png)
+![intro-1.params-ok.png](./screenshots/intro-1.params-ok.png)
 
 However, there is an issue when using traditional positional parameters.
 
@@ -82,7 +82,7 @@ do_exit 0
 
 Now the result will be
 
-![intro-1.colors.png](./screenshots/intro-1.params-problem.png)
+![intro-1.params-problem.png](./screenshots/intro-1.params-problem.png)
 
 - Remark that the parameters are not written to the terminal.
 
@@ -176,4 +176,4 @@ do_exit 0
 
 Now, in both cases, the result will be
 
-![intro-1.colors.png](./screenshots/intro-1.params-ok.png)
+![intro-1.params-ok.png](./screenshots/intro-1.params-ok.png)

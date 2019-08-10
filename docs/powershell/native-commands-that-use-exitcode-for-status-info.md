@@ -40,11 +40,11 @@ do_exit 0
 
 When we execute this command in a powershell, then we get
 
-![intro-1.colors.png](./screenshots/intro-1.exitcode-ok.png)
+![intro-1.exitcode-ok.png](./screenshots/intro-1.exitcode-ok.png)
 
 However, in our script, this is picked up as an error by `do_catch_exit`
 
-![intro-1.colors.png](./screenshots/intro-1.exitcode-problem.png)
+![intro-1.exitcode-problem.png](./screenshots/intro-1.exitcode-problem.png)
 
 One option to solve this is to not use `do_catch_exit` at all.  However, this means you also don't catch `$? -eq False`, or any exit-codes that are not a status-indication but that are a valid error.
 
@@ -88,4 +88,4 @@ do_exit 0
 
 Now we get
 
-![intro-1.colors.png](./screenshots/intro-1.exitcode-solved.png)
+![intro-1.exitcode-solved.png](./screenshots/intro-1.exitcode-solved.png)

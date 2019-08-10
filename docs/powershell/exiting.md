@@ -35,7 +35,7 @@ Write-Output "doing final thing"
 do_exit 0
 ```
 
-![intro-1.catch.png](./screenshots/intro-1.exiting.exit.png)
+![intro-1.exiting.exit.png](./screenshots/intro-1.exiting.exit.png)
 
 - remark that the script stops abruptly, there is no `OK` or `Error`-line.  This is because STEPS cannot catch an exit, it can only catch errors.
 - remark that `$?` returns `True` and `$LASTEXITCODE` returns `0`.  Because STEPS cannot catch the exit, it exits with an 0 exitcode.
@@ -48,7 +48,7 @@ if ( $true ) {   # <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 }                # <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 ```
 
-![intro-1.catch.png](./screenshots/intro-1.exiting.do_exit-without-message.png)
+![intro-1.exiting.do_exit-without-message.png](./screenshots/intro-1.exiting.do_exit-without-message.png)
 
 - remark we now get the corect `$?` and `$LASTEXITCODE`.
 - remark that we get a general `"exited with exitcode 42"` error-message.
@@ -61,7 +61,7 @@ if ( $true ) {         # <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 }                      # <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 ```
 
-![intro-1.catch.png](./screenshots/intro-1.exiting.throw.png)
+![intro-1.exiting.throw.png](./screenshots/intro-1.exiting.throw.png)
 
 - remark that `$LASTEXITCODE` returns a general `99999`.  There is no way to `throw` with a specific exit code.
 
@@ -73,7 +73,7 @@ if ( $true ) {              # <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 }                           # <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 ```
 
-![intro-1.catch.png](./screenshots/intro-1.exiting.do_exit.png)
+![intro-1.exiting.do_exit.png](./screenshots/intro-1.exiting.do_exit.png)
 
 - remark we now have an exit-code, an error and error-message.
 

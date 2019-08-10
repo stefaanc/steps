@@ -40,11 +40,11 @@ do_exit 0
 
 When we execute this in a powershell, then we get
 
-![intro-1.colors.png](./screenshots/intro-1.stderr-ok.png)
+![intro-1.stderr-ok.png](./screenshots/intro-1.stderr-ok.png)
 
 However, as soon as we redirect the error stream, powershell picks the output on `stderr` up and transforms it into a powershell error.  This is **by-design**, and there is no way to avoid this.  We get
 
-![intro-1.colors.png](./screenshots/intro-1.stderr-nok.png)
+![intro-1.stderr-nok.png](./screenshots/intro-1.stderr-nok.png)
 
 - Remark that this is a non-terminating error - `$?` is true, indicating that the command successfully completed.
 - Remark that the output-string from `stderr` becomes the error-message.
@@ -52,7 +52,7 @@ However, as soon as we redirect the error stream, powershell picks the output on
 When you use the STEPS library, all streams except for the "Information" stream are redirected to a log-file, hence triggering powershell to transform the output on `stderr` into a powershell error.  
 The powershell error is non-terminating.  However, since STEPS always sets `$ErrorActionPreference = 'Stop'`, this error is transformed into a terminating error.
 
-![intro-1.colors.png](./screenshots/intro-1.stderr-problem.png)
+![intro-1.stderr-problem.png](./screenshots/intro-1.stderr-problem.png)
 
 - Remark that this is now a terminating error - `$?` is false, indicating that the command failed.
 
@@ -105,7 +105,7 @@ do_exit 0
   
   In this example, this is not strictly required, because the catch statement resets `$?` and the `cmd` command doesn't set `$LASTEXITCODE`, however other commands do set `$LASTEXITCODE` - f.i. try with `openssl genrsa 2048` (although one could argue that this is because of the below problem)
 
-![intro-1.colors.png](./screenshots/intro-1.stderr-solved-1.png)
+![intro-1.stderr-solved-1.png](./screenshots/intro-1.stderr-solved-1.png)
 
 - Remark that the error was caught by the catch statement and was now turned back into a non-terminating error - `$?` is true, indicating that the command successfully completed (did it really ?).
 - `do_continue` resets the `$?` and `$LASTEXITCODE`
@@ -226,7 +226,7 @@ do_exit 0
 
 If we now look at the terminal, we get an all-clear like above.
 
-![intro-1.colors.png](./screenshots/intro-1.stderr-solved-2.png)
+![intro-1.stderr-solved-2.png](./screenshots/intro-1.stderr-solved-2.png)
 
 - Remark that `$Error` on the terminal gives red output.  Compare this to the screenshot where we used the try-catch statement, you can see that the `$Error` output was white.  
   I didn't investigate in detail what the difference is between red and white errors.  This is left for futher research.  
@@ -320,7 +320,7 @@ do_exit 0
 
 Running this gives
 
-![intro-1.colors.png](./screenshots/intro-1.stderr-no-parentheses.png)
+![intro-1.stderr-no-parentheses.png](./screenshots/intro-1.stderr-no-parentheses.png)
 
 - The reason is that, although we made the error non-terminating, the `$?` variable still returns `False`, meaning that the command failed.  Hence it is picked up by the `do_catch_exit` function, which throws a second error - now terminating.
   By encapsulating the command in parentheses, the closing parenthesis behaves like a separate command and sets the `$?` variable to `True`, meaning that this command successfully completed.
@@ -369,7 +369,7 @@ Write-Output "doing final thing"
 do_exit 0
 ```
 
-![intro-1.colors.png](./screenshots/intro-1.stderr-solved-3.png)
+![intro-1.stderr-solved-3.png](./screenshots/intro-1.stderr-solved-3.png)
 
 <br/>
 
