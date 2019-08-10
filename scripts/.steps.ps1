@@ -155,12 +155,13 @@ function do_exec {   # called from 1st 'do_script'
 
     $global:LASTSTEP = 0
 
-    $global:LASTEXITSCRIPT=""
-    $global:LASTEXITCOMMAND=""
-    $global:LASTEXITLINENO=""
-    $global:LASTEXITCHARNO=""
-    $global:LASTEXITMESSAGE=""
-    $global:LASTEXITTRAPPED=""
+    $global:LASTIGNOREDEXITCODE = ""
+    $global:LASTEXITSCRIPT = ""
+    $global:LASTEXITCOMMAND = ""
+    $global:LASTEXITLINENO = ""
+    $global:LASTEXITCHARNO = ""
+    $global:LASTEXITMESSAGE = ""
+    $global:LASTEXITTRAPPED = ""
 
     #Set-Alias 'echo' 'do_echo'                                                 # !!! NEEDS WORK !!!
     #Set-Alias 'exit' 'do_exit'                                                 # !!! NEEDS WORK !!!
@@ -291,12 +292,13 @@ function do_echo {
 function do_reset {
     # Write-Host "${N}##### do_reset${X}"   # for debugging
     cmd /c "exit 0"   # reset $?, reset $LASTEXITCODE
-    $global:LASTEXITSCRIPT=""
-    $global:LASTEXITCOMMAND=""
-    $global:LASTEXITLINENO=""
-    $global:LASTEXITCHARNO=""
-    $global:LASTEXITMESSAGE=""
-    $global:LASTEXITTRAPPED=""
+    $global:LASTIGNOREDEXITCODE = ""
+    $global:LASTEXITSCRIPT = ""
+    $global:LASTEXITCOMMAND = ""
+    $global:LASTEXITLINENO = ""
+    $global:LASTEXITCHARNO = ""
+    $global:LASTEXITMESSAGE = ""
+    $global:LASTEXITTRAPPED = ""
     $Error.Clear()
 }
 
