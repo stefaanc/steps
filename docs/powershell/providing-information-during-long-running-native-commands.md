@@ -48,7 +48,7 @@ do_exit 0
 - the first set of commands starts the background job with our long-running native command - simulated by `Start-Sleep` - and schedules a cleanup action when we exit our script.
 - the second set of commands provides some information to the user, as long as the background job is running.
 
-![intro-1.longrunning.information.png](./docs/powershell/screenshots/intro-1.longrunning.information.png)
+![intro-1.longrunning.information.png](./screenshots/intro-1.longrunning.information.png)
 
 
 
@@ -104,7 +104,7 @@ do_exit 0
 - we added a line to our background job, writing something to output.
 - we added a command to capture the output from the background process.
 
-![intro-1.longrunning.output.png](./docs/powershell/screenshots/intro-1.longrunning.output.png)
+![intro-1.longrunning.output.png](./screenshots/intro-1.longrunning.output.png)
 
 
 
@@ -165,4 +165,4 @@ do_exit 0
 - we added a failing line of code to our background job.  The exit-code of our native command is caught, and we throw an error with the exit-code in the error-message
 - our line that is caturing the output of the background job is now put in a try-catch statement.  It will throw when the background job throws an error.  We catch the error-message and exit our script with that message as exit-code.
 
-![intro-1.longrunning.exit.png](./docs/powershell/screenshots/intro-1.longrunning.exit.png)
+![intro-1.longrunning.exit.png](./screenshots/intro-1.longrunning.exit.png)
