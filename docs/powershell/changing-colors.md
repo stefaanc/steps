@@ -111,9 +111,9 @@ Write-Output "doing something"
 do_step "do something else"
 
 $e = [char]27
-do_echo -Color "$e[91m" "waiting in esc[91m"
-do_echo -Color "#ff8000" "waiting in #ff8000"
-do_echo -Color Yellow "waiting in Yellow"
+do_echo -Color "$e[91m" "waiting in esc[91m"    # <<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+do_echo -Color "#ff8000" "waiting in #ff8000"   # <<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+do_echo -Color Yellow "waiting in Yellow"       # <<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 #
 do_step "do final thing"
@@ -151,8 +151,8 @@ Write-Output "doing something"
 do_step "do something else"
 
 $e = [char]27
-do_echo -Color "$e[91;103m" "waiting in esc[91;103m"
-do_echo -ForegroundColor Yellow -BackgroundColor Red "waiting in Yellow on Red"
+do_echo -Color "$e[91;103m" "waiting in esc[91;103m"                              # <<<<<<<<<<
+do_echo -ForegroundColor Yellow -BackgroundColor Red "waiting in Yellow on Red"   # <<<<<<<<<<
 
 #
 do_step "do final thing"

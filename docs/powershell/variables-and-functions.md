@@ -59,6 +59,9 @@
 - `do_reset`: 
   - resets the `$?`, `$LASTEXITCODE`, `$global:LASTEXIT*` and `$Error` variables
 
+- `do_cleanup`:
+  - [Cleaning-up](./cleaning-up.md)
+
 - `do_exit $exitcode ["$message"]`
   - [Exiting](./exiting.md)
 

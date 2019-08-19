@@ -74,11 +74,11 @@ Copy the STEPS library into your scripts directory.  You can find it on github i
 
 #### [A successful script](./docs/powershell/a-successful-script.md)
 
-![intro-1.intro-1.no-logging.png](./docs/powershell/screenshots/intro-1.no-logging.png)
+![intro-1.no-logging.png](./docs/powershell/screenshots/intro-1.no-logging.png)
 
 #### [Summarizing to terminal and logging to file](./docs/powershell/summarizing-to-terminal-and-logging-to-file.md)
 
-![intro-1.intro-1.successful.png](./docs/powershell/screenshots/intro-1.successful.png)
+![intro-1.successful.png](./docs/powershell/screenshots/intro-1.successful.png)
 
 #### [Generating an error](./docs/powershell/generating-an-error.md)
 
@@ -114,6 +114,7 @@ Copy the STEPS library into your scripts directory.  You can find it on github i
 [**Changing colors**](./docs/powershell/changing-colors.md)
 
 ### Techniques
+
 [**Providing Information During Long-Running Native Commands**](./docs/powershell/providing-information-during-long-running-native-commands.md)  
 [**Using Write-Error vs Throw**](./docs/powershell/using-write-error-vs-throw.md)  
 [**Playing with scopes - A successful call**](./docs/powershell/playing-with-scopes_a-successful-call.md)  
@@ -136,7 +137,47 @@ To debug, comment out the `trap ( do_trap }` line in your script.  Be aware that
 
 ## Getting Started With STEPS In Bash
 
-**TBD**
+Copy the STEPS and GLOBALS library into your scripts directory.  You can find it on github in the STEPS project: `/scripts/.globals.bash` and `/scripts/.steps.bash`
+
+### The Basics
+
+#### [A successful script](./docs/bash/a-successful-script.md)
+
+![intro-3.no-logging.png](./docs/bash/screenshots/intro-3.no-logging.png)
+
+#### [Summarizing to terminal and logging to file](./docs/bash/summarizing-to-terminal-and-logging-to-file.md)
+
+![intro-3.successful.png](./docs/bash/screenshots/intro-3.successful.png)
+
+#### [Catching errors](./docs/bash/catching-errors.md)
+
+![intro-3.failed.png](./docs/bash/screenshots/intro-3.failed.png)
+
+#### [Exiting](./docs/bash/exiting.md)
+
+![intro-3.exiting.do_exit.png](./docs/bash/screenshots/intro-3.exiting.do_exit.png)
+
+#### [Providing more information](./docs/bash/providing-more-information.md)
+
+![intro-3.information.png](./docs/bash/screenshots/intro-3.information.png)
+
+#### [Nesting scripts](./docs/bash/nesting-scripts.md)
+
+![intro-3.nested.png](./docs/bash/screenshots/intro-3.nested.png)
+
+#### [Cleaning Up](./docs/bash/cleaning-up.md)
+
+![intro-3.cleanup.png](./docs/bash/screenshots/intro-3.cleanup.png)
+
+### Advanced Topics
+
+[**Variables and functions**](./docs/bash/variables-and-functions.md)  
+[**Appending to a log-file**](./docs/bash/appending-to-a-log-file.md)  
+[**Changing colors**](./docs/bash/changing-colors.md)
+
+### Techniques
+
+[**Providing Information During Long-Running Native Commands**](./docs/bash/providing-information-during-long-running-native-commands.md)  
 
 
 
@@ -150,13 +191,18 @@ To debug, comment out the `trap ( do_trap }` line in your script.  Be aware that
 
 ![intro-1.packer.failed.png](./docs/powershell/screenshots/intro-1.packer.failed.png)
 
+#### [Calling a bash script from packer](./docs/bash/calling-a-script-from-packer.md)
+
+![intro-3.packer.successful.png](./docs/bash/screenshots/intro-3.packer.successful.png)
+
+![intro-3.packer.failed.png](./docs/bash/screenshots/intro-3.packer.failed.png)
+
 
 
 <br>
 
 ## For Further Investigation
 
-- using aliases `exit` and `echo` for `do_exit` and `do_echo` (is this possible?)
 - in powershell: reset errors-array at start of a script (with an option?)
 - in powershell: research and cover other ways of running a command (f.i. powershell Invoke methods)
 - in powershell: add an option to leave root-script with exception instead of exitcode?
