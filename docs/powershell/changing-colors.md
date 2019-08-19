@@ -43,7 +43,7 @@ do_exit 0
 - `$STEPS_COLORS = "$e[...` defines the "normal", "bright", "green", "yellow", "red" color-codes in a comma separated list without spaces.  In the example, we changed the "normal" color from the default code for powershell (`$e[33m`) to the RGB code `$e[38;2;38;139;210m`.
 
   > :bulb:  
-  > For a good overview of the ANSI/VT100 color-codes, [click here](https://misc.flogisoft.com/bash/tip_colors_and_formatting), and on [wikipedia](https://en.wikipedia.org/wiki/ANSI_escape_code)
+  > For a good overview of the ANSI/VT100 color-codes, [you can look here](https://misc.flogisoft.com/bash/tip_colors_and_formatting) and on [wikipedia](https://en.wikipedia.org/wiki/ANSI_escape_code)
 
 When running the script, our terminal will now look something like
 
@@ -86,7 +86,7 @@ This gives
 
 ### Changing The Color Of `do_echo`
 
-Using options for `do_echo` you can change the foreground- and background-colors f the information written to the console.
+Using options for `do_echo` you can change the foreground- and background-colors of the information written to the console.
 
 For the foreground color, you can use all three color-formats in the option `-Color`: VT100 escape codes, RGB hex codes, or PowerShell palette colors.
 
@@ -111,9 +111,9 @@ Write-Output "doing something"
 do_step "do something else"
 
 $e = [char]27
-do_echo -Color "$e[91m" "waiting in esc[91m"
-do_echo -Color "#ff8000" "waiting in #ff8000"
-do_echo -Color Yellow "waiting in Yellow"
+do_echo -Color "$e[91m" "waiting in esc[91m"    # <<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+do_echo -Color "#ff8000" "waiting in #ff8000"   # <<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+do_echo -Color Yellow "waiting in Yellow"       # <<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 #
 do_step "do final thing"
@@ -151,8 +151,8 @@ Write-Output "doing something"
 do_step "do something else"
 
 $e = [char]27
-do_echo -Color "$e[91;103m" "waiting in esc[91;103m"
-do_echo -ForegroundColor Yellow -BackgroundColor Red "waiting in Yellow on Red"
+do_echo -Color "$e[91;103m" "waiting in esc[91;103m"                              # <<<<<<<<<<
+do_echo -ForegroundColor Yellow -BackgroundColor Red "waiting in Yellow on Red"   # <<<<<<<<<<
 
 #
 do_step "do final thing"

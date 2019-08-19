@@ -37,11 +37,11 @@ do_exit 0
 - `$STEPS_LOG_APPEND = $true` appends the output to the log-file.
 
   > :information_source:  
-  > A value `$false`, `$null`, or `""` disables appending.  
+  > A value `$false`, `$null`, `""` or `"false"` disables appending.  
   > Any other value enables appending.
 
   > :bulb:  
-  > Use a value `$false`, `$null`, or `""` to override `$env:STEPS_LOG_APPEND`
+  > Use a value `$false`, `$null`, `""` or `"false"` to override `$env:STEPS_LOG_APPEND`
 
 When running the script, the log-file will look something like
 
@@ -139,4 +139,4 @@ doing final thing
 
 ```
 
-- remark that the first part of the log-file is from our previous test
+- remark that the first part of the log-file is from a previous test

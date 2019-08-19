@@ -73,7 +73,6 @@ When running packer, our terminal will now look something like
 
 Or when we generate an error
 
-
 ![intro-1.packer.failed.png](./screenshots/intro-1.packer.failed.png)
 
 > :bulb:  
