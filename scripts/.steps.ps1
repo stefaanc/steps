@@ -187,7 +187,7 @@ function do_exec {   # called from 1st 'do_script'
                 New-Item -ItemType directory -Path "$logpath" | Out-Null
             }
 
-            if ( !$STEPS_LOG_APPEND ) {
+            if ( ( "$STEPS_LOG_APPEND" -eq "" ) -or ( "$STEPS_LOG_APPEND".ToLower() -eq "false" ) ) {
                 & "$STEPS_SCRIPT" @STEPS_PARAMS 5>&1 4>&1 3>&1 2>&1 > "$STEPS_LOG_FILE"
             }
             else {
@@ -215,7 +215,7 @@ function do_script {
         $hostname = "@ Host: $env:COMPUTERNAME"
         if ( "$STEPS_LOG_FILE" -ne "" ) {
             $log = "$STEPS_LOG_FILE".Replace("/", "\")
-            if ( !$STEPS_LOG_APPEND ) {
+            if ( ( "$STEPS_LOG_APPEND" -eq "" ) -or ( "$STEPS_LOG_APPEND".ToLower() -eq "false" ) ) {
                 $log = "> Log:  $log"
             }
             else {
