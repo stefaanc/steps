@@ -36,7 +36,7 @@ do_exit 0
 - `STEPS_LOG_APPEND="true"` appends the output to the log-file.
 
   > :information_source:  
-  > A value `""` for `"$STEPS_LOG_APPEND"` disables appending.  
+  > A value `""` or `"false"` for `"$STEPS_LOG_APPEND"` disables appending.  
   > Any other value enables appending.
 
 When running the script, the log-file will look something like
