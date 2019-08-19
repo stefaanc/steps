@@ -139,4 +139,4 @@ doing final thing
 
 ```
 
-- remark that the first part of the log-file is from our previous test
+- remark that the first part of the log-file is from a previous test
